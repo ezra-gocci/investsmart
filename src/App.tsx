@@ -1,7 +1,12 @@
 import InvestmentCalculator from './InvestmentCalculator';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 function App() {
-  return <InvestmentCalculator />;
+  return (
+    <LanguageProvider>
+      <InvestmentCalculator />
+    </LanguageProvider>
+  );
 }
 
 export default App;

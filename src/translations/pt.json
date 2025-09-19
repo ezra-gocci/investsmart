@@ -1,0 +1,213 @@
+{
+  "nav": {
+    "calculate": "Calcular",
+    "recommend": "Recomendar",
+    "explain": "Explicar",
+    "text": "Texto",
+    "manage": "Gerenciar",
+    "login": "Entrar",
+    "logout": "Sair"
+  },
+  "logo": {
+    "title": "InvestSmart"
+  },
+  "calculator": {
+    "title": "Calculadora de Investimento",
+    "subtitle": "Calcule seus retornos de investimento com juros compostos",
+    "initialAmount": "Valor do Investimento Inicial",
+    "initialCapital": "Capital Inicial ($)",
+    "monthlyContribution": "Contribuição Mensal",
+    "monthlyAdd": "Adição Mensal ($)",
+    "annualReturn": "Retorno Anual Esperado (%)",
+    "annualRate": "Taxa Anual (%)",
+    "years": "Período de Investimento (Anos)",
+    "termYears": "Prazo (Anos)",
+    "targetAmount": "Valor Alvo ($)",
+    "compoundingFrequency": "Frequência de Capitalização",
+    "compounding": "Capitalização (Prazo)",
+    "calculate": "Calcular Investimento",
+    "amountInvested": "Valor Investido",
+    "calculationParameters": "Parâmetros de Cálculo",
+    "results": {
+      "title": "Resultados do Investimento",
+      "totalValue": "Valor Total do Investimento",
+      "totalContributions": "Contribuições Totais",
+      "totalGains": "Ganhos Totais do Investimento",
+      "monthlyGrowth": "Crescimento Mensal Médio",
+      "exportReport": "Exportar Relatório",
+      "interestEarned": "Juros Ganhos",
+      "effectiveAnnualReturn": "Retorno Anual Efetivo"
+    },
+    "visualizations": {
+      "title": "Visualizações de Investimento",
+      "growthChart": "Gráfico de Crescimento do Investimento",
+      "compositionChart": "Composição da Carteira",
+      "breakdown": "Gráfico de Detalhamento"
+    },
+    "table": {
+      "title": "Tabela de Investimento",
+      "year": "Ano",
+      "startingAmount": "Valor Inicial",
+      "initialAmount": "Valor Inicial",
+      "contributions": "Contribuições",
+      "interest": "Juros Ganhos",
+      "endingAmount": "Valor Final",
+      "revenue": "Receita",
+      "investmentAdds": "Adições de Investimento"
+    }
+  },
+  "recommendations": {
+    "title": "Recomendações de Investimento",
+    "subtitle": "Estratégias de investimento personalizadas baseadas no seu perfil de risco",
+    "riskAssessment": {
+      "label": "Avaliação de Risco",
+      "title": "Avalie Sua Tolerância ao Risco",
+      "description": "Entenda seu perfil de investidor para tomar decisões informadas"
+    },
+    "allocation": {
+      "title": "Alocação de Ativos Recomendada",
+      "indexFunds": {
+        "title": "Fundos de Índice",
+        "percentage": "60-70%",
+        "examples": "S&P 500, Total Stock Market"
+      },
+      "bonds": {
+        "title": "Títulos",
+        "percentage": "20-30%",
+        "examples": "Títulos do Governo, Títulos Corporativos"
+      },
+      "reits": {
+        "title": "REITs",
+        "percentage": "5-10%",
+        "examples": "Fundos Imobiliários, REITs Diversificados"
+      },
+      "savings": {
+         "title": "Reserva de Emergência",
+         "percentage": "3-6 meses",
+         "examples": "Conta poupança de alto rendimento",
+         "description": "Para liquidez e segurança"
+       }
+    },
+    "strategicAdvice": {
+       "label": "Conselhos Estratégicos",
+       "title": "Diversificação e Rebalanceamento",
+       "description": "Diversifique entre diferentes classes de ativos para reduzir riscos. Sugerimos revisar seu portfólio anualmente ou semestralmente para rebalanceá-lo de volta à sua alocação alvo."
+     },
+    "historicalExamples": {
+       "label": "Exemplos Históricos",
+       "title": "Análise de Desempenho Passado",
+       "description": "Historicamente, um portfólio com esta alocação mostrou resistência durante quedas do mercado enquanto capturava crescimento em mercados em alta. O retorno anual médio tem sido na faixa de 6-8%."
+     },
+    "conservative": {
+      "title": "Conservador",
+      "description": "Baixo risco, retornos estáveis",
+      "allocation": "70% Títulos, 30% Ações",
+      "expectedReturn": "4-6% ao ano"
+    },
+    "moderate": {
+      "title": "Moderado",
+      "description": "Risco equilibrado, crescimento estável",
+      "allocation": "50% Ações, 40% Títulos, 10% REITs",
+      "expectedReturn": "6-8% ao ano"
+    },
+    "aggressive": {
+      "title": "Agressivo",
+      "description": "Alto risco, alto potencial de crescimento",
+      "allocation": "80% Ações, 15% REITs, 5% Títulos",
+      "expectedReturn": "8-12% ao ano"
+    }
+  },
+  "explanations": {
+    "title": "Como Funciona - Fórmulas e Explicações",
+    "subtitle": "Entendendo a matemática por trás dos juros compostos e como cada campo de entrada afeta o crescimento do seu investimento.",
+    "formula": {
+      "label": "Fórmula Principal",
+      "title": "Juros Compostos com Adições Regulares"
+    },
+    "inputFields": {
+      "label": "Campos de Entrada",
+      "title": "Entendendo seus Parâmetros de Investimento",
+      "initialCapital": {
+        "title": "Capital Inicial",
+        "description": "O valor inicial que você investe. Ele cresce através de juros compostos ao longo do tempo."
+      },
+      "monthlyAddition": {
+        "title": "Adição Mensal",
+        "description": "Contribuições mensais regulares que aceleram o crescimento através da média de custo em dólares."
+      },
+      "annualRate": {
+        "title": "Taxa Anual",
+        "description": "Porcentagem de retorno anual esperado. A média histórica do mercado de ações é ~7-10%."
+      },
+      "termYears": {
+        "title": "Prazo (Anos)",
+        "description": "Duração do investimento. Períodos mais longos amplificam exponencialmente os efeitos dos juros compostos."
+      },
+      "compoundingFrequency": {
+        "title": "Frequência de Capitalização",
+        "description": "Com que frequência os juros são calculados e adicionados. Mais frequente = retornos ligeiramente maiores."
+      },
+      "targetAmount": {
+        "title": "Valor Alvo",
+        "description": "Seu objetivo financeiro. A calculadora pode resolver qualquer variável em falta."
+      }
+    },
+    "resultsBreakdown": {
+      "label": "Detalhamento dos Resultados",
+      "title": "Entendendo o Crescimento do seu Investimento",
+      "totalInvested": {
+        "title": "Total Investido",
+        "description": "Capital inicial + todas as adições mensais. Este é seu investimento real do seu bolso."
+      },
+      "interestEarned": {
+        "title": "Juros Ganhos",
+        "description": "Dinheiro gerado puramente do crescimento composto. Este é o 'dinheiro grátis' do seu investimento."
+      },
+      "finalValue": {
+        "title": "Valor Final",
+        "description": "Valor total da carteira: valor investido + juros compostos ganhos ao longo do tempo."
+      }
+    },
+    "keyInsights": {
+      "label": "Insights Principais",
+      "title": "O Poder dos Juros Compostos",
+      "time": {
+        "title": "O Tempo é seu Maior Ativo",
+        "description": "Começar cedo, mesmo com valores menores, frequentemente supera investimentos maiores feitos mais tarde devido ao crescimento exponencial."
+      },
+      "consistency": {
+        "title": "Consistência Importa",
+        "description": "Adições mensais regulares aproveitam a média de custo em dólares e aumentam significativamente os retornos de longo prazo."
+      },
+      "rateImpact": {
+        "title": "Impacto da Taxa",
+        "description": "Pequenas diferenças nas taxas de retorno anual (ex. 6% vs 8%) criam diferenças massivas ao longo de décadas."
+      },
+      "compoundingFrequency": {
+        "title": "Frequência de Capitalização",
+        "description": "Embora a capitalização diária supere a anual, a diferença é menor do que a maioria das pessoas espera."
+      }
+    },
+    "compoundInterest": {
+      "title": "Fórmula dos Juros Compostos",
+      "description": "A base do crescimento do investimento são os juros compostos, onde seus ganhos geram seus próprios ganhos ao longo do tempo."
+    },
+    "monthlyContributions": {
+      "title": "Impacto das Contribuições Mensais",
+      "description": "Contribuições mensais regulares aumentam significativamente o crescimento do seu investimento através da média de custo em dólares e capitalização consistente."
+    },
+    "timeValue": {
+      "title": "Valor do Tempo do Dinheiro",
+      "description": "Quanto mais cedo você começar a investir, mais tempo seu dinheiro terá para crescer. Mesmo pequenos valores podem se tornar substanciais em períodos longos."
+    }
+  },
+  "language": {
+    "selector": "Idioma",
+    "english": "English",
+    "spanish": "Español",
+    "french": "Français",
+    "portuguese": "Português",
+    "czech": "Čeština",
+    "armenian": "Հայերեն"
+  }
+}

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InvestSmart</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#38e07b",
+              "background-light": "#f6f8f7",
+              "background-dark": "#122017",
+            },
+            fontFamily: {
+              display: ["Manrope"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-black dark:text-white">
+<div class="flex min-h-screen w-full flex-col">
+<header class="sticky top-0 z-10 border-b border-black/10 dark:border-white/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="container mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+<div class="flex items-center gap-4">
+<div class="h-8 w-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold">InvestSmart</h2>
+</div>
+<nav class="hidden items-center gap-8 md:flex">
+<a class="text-sm font-medium hover:text-primary" href="#">Calc</a>
+<a class="text-sm font-medium hover:text-primary" href="#">About</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-6 text-sm font-bold text-background-dark">
+<span class="truncate">Get Started</span>
+</button>
+<div class="h-10 w-10">
+<img alt="User avatar" class="h-full w-full rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdPu9rY0hwR6x9CATWUSew-bKuZ3RLO_pMWJc8VmTEMeNNLP94ysetVfX2B6V7_nrwd4DZWnqTguLl9GYXPUnofJrgdcGYewH-T_Ot5G_eM0dO6Y1SS-pRbaN1UJfk0OdnpHtJ1rNADdc1aEy_1BTEc0Lpki5q9Gn13FdQaXu6CKYpCgzfmCpJUBY-JDBT7x1MFfPzq_DTxeUTxQJJmjVMaOdsq6SEQ0iOMeHHnBrdNMe9UwmbxZBtA6X1b2rUwQCN-8Dm05wq8A"/>
+</div>
+</div>
+</div>
+</header>
+<main class="container mx-auto flex-1 px-4 py-8 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl">
+<div class="mb-12 text-center">
+<h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Smart Compound Interest Calculator</h1>
+<p class="mt-4 text-lg text-black/60 dark:text-white/60">Plan your investments with precision. Our calculator helps you visualize your returns and optimize your investment strategy.</p>
+</div>
+<div class="mb-12 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6">
+<form class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
+<label class="group flex flex-col gap-2">
+<span class="text-sm font-medium text-black/80 dark:text-white/80">Initial Capital</span>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-black/20 bg-background-light dark:border-white/20 dark:bg-background-dark placeholder:text-black/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-primary" placeholder="$10,000" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined cursor-pointer text-black/40 dark:text-white/40">lock_open</span>
+</div>
+</div>
+</label>
+<label class="group flex flex-col gap-2">
+<span class="text-sm font-medium text-black/80 dark:text-white/80">Annual Rate (%)</span>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-black/20 bg-background-light dark:border-white/20 dark:bg-background-dark placeholder:text-black/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-primary" placeholder="5" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined cursor-pointer text-black/40 dark:text-white/40">lock</span>
+</div>
+</div>
+</label>
+<label class="group flex flex-col gap-2">
+<span class="text-sm font-medium text-black/80 dark:text-white/80">Term (Years)</span>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-black/20 bg-background-light dark:border-white/20 dark:bg-background-dark placeholder:text-black/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-primary" placeholder="10" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined cursor-pointer text-black/40 dark:text-white/40">lock_open</span>
+</div>
+</div>
+</label>
+<label class="group flex flex-col gap-2">
+<span class="text-sm font-medium text-black/80 dark:text-white/80">Monthly Add ($)</span>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-black/20 bg-background-light dark:border-white/20 dark:bg-background-dark placeholder:text-black/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-primary" placeholder="500" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined cursor-pointer text-black/40 dark:text-white/40">lock</span>
+</div>
+</div>
+</label>
+<label class="group flex flex-col gap-2">
+<span class="text-sm font-medium text-black/80 dark:text-white/80">Compounding</span>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-black/20 bg-background-light dark:border-white/20 dark:bg-background-dark placeholder:text-black/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-primary" placeholder="Annually" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined cursor-pointer text-black/40 dark:text-white/40">lock_open</span>
+</div>
+</div>
+</label>
+<label class="group flex flex-col gap-2">
+<span class="text-sm font-medium text-black/80 dark:text-white/80">Target Amount</span>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-black/20 bg-background-light dark:border-white/20 dark:bg-background-dark placeholder:text-black/40 dark:placeholder:text-white/40 focus:border-primary focus:ring-primary" placeholder="$50,000" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined cursor-pointer text-black/40 dark:text-white/40">lock</span>
+</div>
+</div>
+</label>
+<div class="flex items-end gap-2">
+<button class="flex h-10 w-full items-center justify-center rounded-lg bg-primary text-sm font-bold text-background-dark" type="button">Calculate</button>
+</div>
+</form>
+</div>
+<div class="grid grid-cols-1 gap-x-8 gap-y-12">
+<div class="space-y-12">
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-bold">Investment Results</h2>
+<button class="flex h-10 items-center justify-center gap-2 rounded-lg border border-black/10 bg-black/5 px-4 text-sm font-bold text-black dark:border-white/10 dark:bg-white/5 dark:text-white">
+<span class="material-symbols-outlined">download</span>
+<span>Export Report</span>
+</button>
+</div>
+<div>
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+<div class="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6">
+<p class="text-sm font-medium text-black/60 dark:text-white/60">Total Contributions</p>
+<p class="text-3xl font-bold">$70,000</p>
+</div>
+<div class="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6">
+<p class="text-sm font-medium text-black/60 dark:text-white/60">Interest Earned</p>
+<p class="text-3xl font-bold">$15,000</p>
+</div>
+<div class="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6">
+<p class="text-sm font-medium text-black/60 dark:text-white/60">Effective Annual Return</p>
+<p class="text-3xl font-bold">7.5%</p>
+</div>
+</div>
+</div>
+<div>
+<h2 class="mb-4 text-2xl font-bold">Visualizations</h2>
+<div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+<div class="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6">
+<p class="text-base font-medium">Investment Growth Over Time</p>
+<div class="mt-4 h-64">
+<svg class="h-full w-full" fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 500 250" width="100%" xmlns="http://www.w3.org/2000/svg">
+<g class="grid" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1">
+<line x1="0" x2="500" y1="50" y2="50"></line>
+<line x1="0" x2="500" y1="100" y2="100"></line>
+<line x1="0" x2="500" y1="150" y2="150"></line>
+<line x1="0" x2="500" y1="200" y2="200"></line>
+</g>
+<g class="axes-labels text-xs text-black/60 dark:text-white/60">
+<text fill="currentColor" x="0" y="245">0</text>
+<text fill="currentColor" x="100" y="245">2</text>
+<text fill="currentColor" x="200" y="245">4</text>
+<text fill="currentColor" x="300" y="245">6</text>
+<text fill="currentColor" x="400" y="245">8</text>
+<text fill="currentColor" x="490" y="245">10y</text>
+<text fill="currentColor" text-anchor="end" x="495" y="205">$20k</text>
+<text fill="currentColor" text-anchor="end" x="495" y="155">$40k</text>
+<text fill="currentColor" text-anchor="end" x="495" y="105">$60k</text>
+<text fill="currentColor" text-anchor="end" x="495" y="55">$80k</text>
+<text fill="currentColor" text-anchor="end" x="495" y="15">$100k</text>
+</g>
+<path d="M 0 220 C 100 200, 200 180, 300 160, 400 140, 500 120" stroke="#a78bfa" stroke-width="2"></path>
+<path d="M 0 220 C 100 180, 200 140, 300 100, 400 60, 500 20" stroke="#f472b6" stroke-width="2"></path>
+<path d="M 0 220 C 100 150, 200 100, 300 70, 400 40, 500 10" stroke="#38e07b" stroke-width="3"></path>
+</svg>
+</div>
+<div class="mt-4 flex justify-center gap-6 text-sm">
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-[#a78bfa]"></div>
+<span>Invested Amount</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-[#f472b6]"></div>
+<span>Revenue</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-primary"></div>
+<span>Total</span>
+</div>
+</div>
+</div>
+<div class="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6">
+<p class="text-base font-medium">Breakdown</p>
+<div class="mt-4 flex h-64 items-center justify-center">
+<svg class="h-full w-full" height="200" viewBox="0 0 200 200" width="200">
+<circle class="text-yellow-400" cx="100" cy="100" fill="none" r="50" stroke="currentColor" stroke-dasharray="219.91, 314.15" stroke-dashoffset="0" stroke-width="30"></circle>
+<circle class="text-pink-500" cx="100" cy="100" fill="none" r="50" stroke="currentColor" stroke-dasharray="62.83, 314.15" stroke-dashoffset="-219.91" stroke-width="30"></circle>
+<circle class="text-primary" cx="100" cy="100" fill="none" r="50" stroke="currentColor" stroke-dasharray="31.41, 314.15" stroke-dashoffset="-282.74" stroke-width="30"></circle>
+</svg>
+</div>
+<div class="mt-4 flex justify-center gap-6 text-sm">
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-yellow-400"></div>
+<span>Initial Investment (70%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-pink-500"></div>
+<span>Monthly Additions (20%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-primary"></div>
+<span>Revenue (10%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h2 class="mb-4 text-2xl font-bold">Annual Aggregate Table</h2>
+<div class="overflow-x-auto rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
+<table class="min-w-full divide-y divide-black/10 dark:divide-white/10">
+<thead class="bg-black/5 dark:bg-white/5">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/60" scope="col">Year</th>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/60" scope="col">Initial Amount</th>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/60" scope="col">Revenue</th>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/60" scope="col">Investment Adds</th>
+<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/60" scope="col">Ending Amount</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-black/10 dark:divide-white/10">
+<tr>
+<td class="whitespace-nowrap px-6 py-4 text-sm font-medium">1</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$10,000</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$500</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$6,000</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$16,500</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 text-sm font-medium">2</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$16,500</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$1,000</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$6,000</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$23,500</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 text-sm font-medium">3</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$23,500</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$1,500</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$6,000</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-black/80 dark:text-white/80">$31,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h2 class="mb-4 text-2xl font-bold">Investment Recommendations</h2>
+<p class="mb-8 text-black/60 dark:text-white/60">Based on your inputs, we recommend a tailored investment portfolio. Below are detailed suggestions for a moderate risk profile, designed for long-term growth.</p>
+<div class="space-y-8">
+<div class="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6">
+<div class="flex flex-col gap-6 md:flex-row">
+<div class="flex-1">
+<p class="text-sm font-medium text-primary">Risk Assessment</p>
+<h3 class="text-lg font-bold">Moderate Risk</h3>
+<p class="mt-2 text-sm text-black/60 dark:text-white/60">This portfolio balances potential returns with risk mitigation, suitable for long-term growth with some tolerance for market fluctuations.</p>
+</div>
+<div class="h-40 w-full flex-shrink-0 rounded-lg bg-cover bg-center md:h-auto md:w-48" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCfuUwtiY_DH9smiuaWmwfwh1S7IH7NA6GBVyft0slRSeXQZkPdhutg_IBODUc9ucfsEUJLfq4_NvYZZdL6nN45ryyikUnGzshTwYs5T7tQPnOgZ5PLNKnvEQ6qzAvOhlOd4YnOdfZ-7kejXqPMjUEEPkUWTFB6j0qh5vML2f474LRDRxY-IiZhzt2wsDNKVBSByHlU5E64Jw2ciWJr-6uLIpo7V0h7Hf16jmA9uyDvhlAAU5j7WOMfnBjWAaZ5V1o1wKSlZ1RYiw");'></div>
+</div>
+<div class="mt-6">
+<h4 class="text-base font-bold">Suggested Allocation</h4>
+<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<div class="rounded-lg bg-black/5 dark:bg-white/5 p-4">
+<p class="text-sm font-medium">Index Funds (ETFs)</p>
+<p class="text-2xl font-bold">40%</p>
+<p class="text-xs text-black/60 dark:text-white/60">e.g., S&amp;P 500, Nasdaq 100</p>
+</div>
+<div class="rounded-lg bg-black/5 dark:bg-white/5 p-4">
+<p class="text-sm font-medium">Government Bonds</p>
+<p class="text-2xl font-bold">30%</p>
+<p class="text-xs text-black/60 dark:text-white/60">e.g., 10-Year Treasury Notes</p>
+</div>
+<div class="rounded-lg bg-black/5 dark:bg-white/5 p-4">
+<p class="text-sm font-medium">Real Estate (REITs)</p>
+<p class="text-2xl font-bold">20%</p>
+<p class="text-xs text-black/60 dark:text-white/60">e.g., Diversified REIT ETF</p>
+</div>
+<div class="rounded-lg bg-black/5 dark:bg-white/5 p-4">
+<p class="text-sm font-medium">High-Yield Savings</p>
+<p class="text-2xl font-bold">10%</p>
+<p class="text-xs text-black/60 dark:text-white/60">For liquidity and safety</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6 md:flex-row">
+<div class="flex-1">
+<p class="text-sm font-medium text-primary">Strategic Advice</p>
+<h3 class="text-lg font-bold">Diversification &amp; Rebalancing</h3>
+<p class="mt-2 text-sm text-black/60 dark:text-white/60">Diversify across different asset classes to reduce risk. We suggest reviewing your portfolio annually or semi-annually to rebalance it back to your target allocation. This helps in managing risk and capturing gains systematically.</p>
+</div>
+<div class="h-40 w-full flex-shrink-0 rounded-lg bg-cover bg-center md:h-auto md:w-48" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4qS7L3jcRMNtEusgApDdaG59qua_s1FcL-jTxQ1xi2o-sWwYaNhIiXURBkFYXU1kdkjDjqEf6SUraMRYUKoBwEBzVXbR052cU00OEQR4jd4q-hSPgIH-4Xm-0uCzTbi0o5q6S0phamrCGqyIGSuOTyrYvPfWhDC2gBE1UhZbgcNrYU_MyEOKto2gYqd1laM84RnSfsik_T5kTC3UzDdWMHYU_m1WIcyIWTmVZWDHinftUkHcsQmcVlYJ-56nHR01gWrF-asVBnw");'></div>
+</div>
+<div class="flex flex-col gap-6 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6 md:flex-row">
+<div class="flex-1">
+<p class="text-sm font-medium text-primary">Historical Examples</p>
+<h3 class="text-lg font-bold">Past Performance Analysis</h3>
+<p class="mt-2 text-sm text-black/60 dark:text-white/60">Historically, a portfolio with this allocation has shown resilience during market downturns while capturing growth in bull markets. The average annual return has been in the 6-8% range over the past decade, though past performance is not indicative of future results.</p>
+</div>
+<div class="h-40 w-full flex-shrink-0 rounded-lg bg-cover bg-center md:h-auto md:w-48" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVj9Y4nU6Pdvf2ZtJCk182E9-CnzfvE_bXw9xDOG6D4nkUGZh_MqcXlsEaXb1PtCZw1xFNvyLN0Au75sci3hFR2AXRFzj9H0cfu5RjkrUcU2iGT7SfBEivZVZO0sZRu0zm7aBcDkI3drpz_vVaHUHPNwaLRl_oHFgdZPaFBFdHS2CxapO7STpTeCJ0yrXfFlj8sidZeZjaBFkj4GfevYDpIeqFGxhKNL7JRTZz3wrs4jr4v3ag3_N--tbqMo4T0wrEEpBmXB_p1w");'></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
