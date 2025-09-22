@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../../translations/LanguageContext';
 
 const Header: React.FC<{ activeSection: string; onSectionChange: (section: string) => void; isLoggedIn: boolean; onAuthClick: () => void }> = ({ 
