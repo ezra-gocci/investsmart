@@ -210,5 +210,17 @@
     "portuguese": "Português",
     "czech": "Čeština",
     "armenian": "Հայերեն"
+  },
+  "forgetMe": {
+    "button": {
+      "title": "Effacer toutes les données stockées (conserve la session actuelle)",
+      "label": "M'oublier"
+    },
+    "tooltip": {
+      "title": "État des Données Stockées",
+      "loginStatus": "État de connexion (connexion persistante)",
+      "languagePreference": "Préférence de langue (langue de l'interface)",
+      "authToken": "Jeton d'authentification (accès API)"
+    }
   }
 }

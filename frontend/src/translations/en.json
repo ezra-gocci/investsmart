@@ -209,5 +209,17 @@
     "portuguese": "Português",
     "czech": "Čeština",
     "armenian": "Հայերեն"
+  },
+  "forgetMe": {
+    "button": {
+      "title": "Clear all stored data (keeps current session)",
+      "label": "Forget me"
+    },
+    "tooltip": {
+      "title": "Stored Data Status",
+      "loginStatus": "User login status (persistent login)",
+      "languagePreference": "Language preference (UI language)",
+      "authToken": "Authentication token (API access)"
+    }
   }
 }

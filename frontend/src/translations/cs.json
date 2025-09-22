@@ -210,5 +210,17 @@
     "portuguese": "Português",
     "czech": "Čeština",
     "armenian": "Հայերեն"
+  },
+  "forgetMe": {
+    "button": {
+      "title": "Vymazat všechna uložená data (zachová aktuální relaci)",
+      "label": "Zapomenout mě"
+    },
+    "tooltip": {
+      "title": "Stav uložených dat",
+      "loginStatus": "Stav přihlášení uživatele (trvalé přihlášení)",
+      "languagePreference": "Jazykové preference (jazyk rozhraní)",
+      "authToken": "Autentizační token (přístup k API)"
+    }
   }
 }

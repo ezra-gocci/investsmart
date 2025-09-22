@@ -210,5 +210,17 @@
     "portuguese": "Português",
     "czech": "Čeština",
     "armenian": "Հայերեն"
+  },
+  "forgetMe": {
+    "button": {
+      "title": "Limpar todos os dados armazenados (mantém a sessão atual)",
+      "label": "Esquecer-me"
+    },
+    "tooltip": {
+      "title": "Status dos Dados Armazenados",
+      "loginStatus": "Status de login do usuário (login persistente)",
+      "languagePreference": "Preferência de idioma (idioma da interface)",
+      "authToken": "Token de autenticação (acesso à API)"
+    }
   }
 }
