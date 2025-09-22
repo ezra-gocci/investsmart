@@ -1,0 +1,216 @@
+{
+  "nav": {
+    "calculate": "Calcular",
+    "recommend": "Recomendar",
+    "explain": "Explicar",
+    "text": "Texto",
+    "manage": "Gestionar",
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "loginPrompt": "Inicia sesión para probarlo"
+  },
+  "logo": {
+    "title": "InvestSmart"
+  },
+  "calculator": {
+    "title": "Calculadora de Inversión",
+    "subtitle": "Calcula tus retornos de inversión con interés compuesto",
+    "initialAmount": "Monto de Inversión Inicial",
+    "initialCapital": "Capital Inicial ($)",
+    "monthlyContribution": "Contribución Mensual",
+    "monthlyAdd": "Adición Mensual ($)",
+    "annualReturn": "Retorno Anual Esperado (%)",
+    "annualRate": "Tasa Anual (%)",
+    "years": "Período de Inversión (Años)",
+    "termYears": "Plazo (Años)",
+    "targetAmount": "Monto Objetivo ($)",
+    "compoundingFrequency": "Frecuencia de Capitalización",
+    "compounding": "Capitalización (Plazo)",
+    "calculate": "Calcular Inversión",
+    "amountInvested": "Monto Invertido",
+    "calculationParameters": "Parámetros de Cálculo",
+    "results": {
+      "title": "Resultados de Inversión",
+      "totalValue": "Valor Total de Inversión",
+      "totalContributions": "Contribuciones Totales",
+      "totalGains": "Ganancias Totales de Inversión",
+      "monthlyGrowth": "Crecimiento Mensual Promedio",
+      "exportReport": "Exportar Reporte",
+      "interestEarned": "Interés Ganado",
+      "effectiveAnnualReturn": "Retorno Anual Efectivo"
+    },
+    "visualizations": {
+      "title": "Visualizaciones de Inversión",
+      "growthChart": "Gráfico de Crecimiento de Inversión",
+      "compositionChart": "Composición del Portafolio",
+      "breakdown": "Gráfico de Desglose"
+    },
+    "table": {
+      "title": "Tabla de Inversión",
+      "year": "Año",
+      "startingAmount": "Monto Inicial",
+      "initialAmount": "Monto Inicial",
+      "contributions": "Contribuciones",
+      "interest": "Interés Ganado",
+      "endingAmount": "Monto Final",
+      "revenue": "Ingresos",
+      "investmentAdds": "Adiciones de Inversión"
+    }
+  },
+  "recommendations": {
+    "title": "Recomendaciones de Inversión",
+    "subtitle": "Basado en tu perfil de riesgo y objetivos de inversión",
+    "riskAssessment": {
+      "label": "Evaluación de Riesgo",
+      "title": "Entendiendo tu Tolerancia al Riesgo",
+      "description": "Tu tolerancia al riesgo determina la mezcla apropiada de inversiones. Los inversores conservadores prefieren estabilidad, mientras que los agresivos buscan crecimiento."
+    },
+    "allocation": {
+      "title": "Estrategia de Asignación de Activos",
+      "indexFunds": {
+        "title": "Fondos Indexados",
+        "percentage": "40-70%",
+        "examples": "S&P 500, Total Stock Market",
+        "description": "Para diversificación y crecimiento a largo plazo"
+      },
+      "bonds": {
+        "title": "Bonos",
+        "percentage": "20-50%",
+        "examples": "Bonos del Tesoro, Bonos Corporativos",
+        "description": "Para estabilidad y ingresos"
+      },
+      "reits": {
+        "title": "REITs",
+        "percentage": "5-15%",
+        "examples": "Fondos de Bienes Raíces",
+        "description": "Para diversificación e ingresos"
+      },
+      "savings": {
+        "title": "Ahorros",
+        "percentage": "5-15%",
+        "description": "Para liquidez y seguridad"
+      }
+    },
+    "strategicAdvice": {
+      "label": "Consejo Estratégico",
+      "title": "Diversificación y Rebalanceo",
+      "description": "Diversifica entre diferentes clases de activos para reducir el riesgo. Recomendamos revisar y rebalancear tu portafolio anual o semestralmente para mantener tu asignación objetivo."
+    },
+    "historicalExamples": {
+      "label": "Ejemplos Históricos",
+      "title": "Análisis de Rendimiento Pasado",
+      "description": "Históricamente, un portafolio con esta asignación ha mostrado resistencia durante las caídas del mercado mientras captura el crecimiento en mercados alcistas. El retorno anual promedio ha estado en el rango del 6-8%."
+    },
+    "conservative": {
+      "title": "Portafolio Conservador",
+      "description": "Bajo riesgo, retornos estables. Ideal para preservación de capital.",
+      "allocation": "60% Bonos, 30% Acciones, 10% Efectivo",
+      "expectedReturn": "Retorno Esperado: 4-6% anual"
+    },
+    "moderate": {
+      "title": "Portafolio Moderado",
+      "description": "Riesgo y retorno equilibrados. Bueno para crecimiento a largo plazo.",
+      "allocation": "40% Bonos, 50% Acciones, 10% REITs",
+      "expectedReturn": "Retorno Esperado: 6-8% anual"
+    },
+    "aggressive": {
+      "title": "Portafolio Agresivo",
+      "description": "Mayor riesgo, mayores retornos potenciales. Para inversores enfocados en crecimiento.",
+      "allocation": "20% Bonos, 70% Acciones, 10% Inversiones Alternativas",
+      "expectedReturn": "Retorno Esperado: 8-12% anual"
+    }
+  },
+  "explanations": {
+    "title": "Cómo Funciona - Fórmulas y Explicaciones",
+    "subtitle": "Entendiendo las matemáticas detrás del interés compuesto y cómo cada campo de entrada afecta el crecimiento de tu inversión.",
+    "formula": {
+      "label": "Fórmula Principal",
+      "title": "Interés Compuesto con Adiciones Regulares"
+    },
+    "inputFields": {
+      "label": "Campos de Entrada",
+      "title": "Entendiendo tus Parámetros de Inversión",
+      "initialCapital": {
+        "title": "Capital Inicial",
+        "description": "La cantidad inicial que inviertes. Esto crece a través del interés compuesto con el tiempo."
+      },
+      "monthlyAddition": {
+        "title": "Adición Mensual",
+        "description": "Contribuciones mensuales regulares que aceleran el crecimiento a través del promedio de costo en dólares."
+      },
+      "annualRate": {
+        "title": "Tasa Anual",
+        "description": "Porcentaje de retorno anual esperado. El promedio histórico del mercado de valores es ~7-10%."
+      },
+      "termYears": {
+        "title": "Plazo (Años)",
+        "description": "Duración de la inversión. Períodos más largos amplifican los efectos del interés compuesto exponencialmente."
+      },
+      "compoundingFrequency": {
+        "title": "Frecuencia de Capitalización",
+        "description": "Qué tan a menudo se calcula y añade el interés. Más frecuente = retornos ligeramente más altos."
+      },
+      "targetAmount": {
+        "title": "Cantidad Objetivo",
+        "description": "Tu meta financiera. La calculadora puede resolver cualquier variable faltante."
+      }
+    },
+    "resultsBreakdown": {
+      "label": "Desglose de Resultados",
+      "title": "Entendiendo el Crecimiento de tu Inversión",
+      "totalInvested": {
+        "title": "Total Invertido",
+        "description": "Capital inicial + todas las adiciones mensuales. Esta es tu inversión real de bolsillo."
+      },
+      "interestEarned": {
+        "title": "Interés Ganado",
+        "description": "Dinero generado puramente del crecimiento compuesto. Este es el 'dinero gratis' de tu inversión."
+      },
+      "finalValue": {
+        "title": "Valor Final",
+        "description": "Valor total del portafolio: cantidad invertida + interés compuesto ganado con el tiempo."
+      }
+    },
+    "keyInsights": {
+      "label": "Perspectivas Clave",
+      "title": "El Poder del Interés Compuesto",
+      "time": {
+        "title": "El Tiempo es tu Mayor Activo",
+        "description": "Comenzar temprano, incluso con cantidades menores, a menudo supera a inversiones más grandes hechas después debido al crecimiento exponencial."
+      },
+      "consistency": {
+        "title": "La Consistencia Importa",
+        "description": "Las adiciones mensuales regulares aprovechan el promedio de costo en dólares y aumentan significativamente los retornos a largo plazo."
+      },
+      "rateImpact": {
+        "title": "Impacto de la Tasa",
+        "description": "Pequeñas diferencias en las tasas de retorno anual (ej., 6% vs 8%) crean diferencias masivas a lo largo de décadas."
+      },
+      "compoundingFrequency": {
+        "title": "Frecuencia de Capitalización",
+        "description": "Aunque la capitalización diaria supera a la anual, la diferencia es menor de lo que la mayoría espera."
+      }
+    },
+    "compoundInterest": {
+      "title": "Fórmula del Interés Compuesto",
+      "description": "La base del crecimiento de inversión es el interés compuesto, donde tus ganancias generan sus propias ganancias con el tiempo."
+    },
+    "monthlyContributions": {
+      "title": "Impacto de las Contribuciones Mensuales",
+      "description": "Las contribuciones mensuales regulares aumentan significativamente el crecimiento de tu inversión a través del promedio de costo en dólares y capitalización consistente."
+    },
+    "timeValue": {
+      "title": "Valor del Tiempo del Dinero",
+      "description": "Cuanto antes comiences a invertir, más tiempo tendrá tu dinero para crecer. Incluso cantidades pequeñas pueden volverse sustanciales en períodos largos."
+    }
+  },
+  "language": {
+    "selector": "Idioma",
+    "english": "English",
+    "spanish": "Español",
+    "french": "Français",
+    "portuguese": "Português",
+    "czech": "Čeština",
+    "armenian": "Հայերեն"
+  }
+}

@@ -1,0 +1,314 @@
+// Utility functions and constants for the investment calculator application
+
+// Formatters
+export {
+  formatCurrency,
+  formatPercentage,
+  formatLargeNumber,
+  formatDate,
+  formatRelativeTime,
+  formatDuration,
+  formatNumber,
+  formatPhoneNumber,
+  formatFileSize,
+  truncateText,
+  formatName,
+  formatEmail,
+  formatUrl,
+  formatReturn,
+  formatTimePeriod,
+  formatCompoundingFrequency
+} from './formatters';
+
+// Validators
+export {
+  validateEmail,
+  validatePassword,
+  validatePasswordMatch,
+  validatePhoneNumber,
+  validateRequired,
+  validateNumber,
+  validateInvestmentAmount,
+  validateInterestRate,
+  validateTimePeriod,
+  validatePercentage,
+  validateUrl,
+  validateDate,
+  validateAge,
+  validateFile,
+  validateArrayLength,
+  validateStringLength,
+  validateAllocationSum,
+  validateRiskTolerance,
+  validateCompoundingFrequency,
+  validateFields
+} from './validators';
+
+export type { ValidationResult } from './validators';
+
+// Constants
+export {
+  API_CONFIG,
+  AUTH_CONFIG,
+  STORAGE_KEYS,
+  INVESTMENT_LIMITS,
+  COMPOUNDING_FREQUENCIES,
+  RISK_LEVELS,
+  ASSET_CLASSES,
+  GOAL_CATEGORIES,
+  CURRENCIES,
+  LANGUAGES,
+  THEMES,
+  CHART_COLORS,
+  ANIMATION_DURATIONS,
+  BREAKPOINTS,
+  FILE_UPLOAD,
+  NOTIFICATION_TYPES,
+  PAGINATION,
+  DATE_FORMATS,
+  ECONOMIC_INDICATORS,
+  CALCULATION_DEFAULTS,
+  FEATURE_FLAGS,
+  ERROR_MESSAGES,
+  SUCCESS_MESSAGES,
+  REGEX_PATTERNS,
+  SOCIAL_LINKS,
+  CONTACT_INFO,
+  APP_METADATA
+} from './constants';
+
+// Additional utility functions
+
+/**
+ * Debounce function to limit the rate of function calls
+ */
+export const debounce = <T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): ((...args: Parameters<T>) => void) => {
+  let timeout: NodeJS.Timeout;
+  
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+};
+
+/**
+ * Throttle function to limit the rate of function calls
+ */
+export const throttle = <T extends (...args: any[]) => any>(
+  func: T,
+  limit: number
+): ((...args: Parameters<T>) => void) => {
+  let inThrottle: boolean;
+  
+  return (...args: Parameters<T>) => {
+    if (!inThrottle) {
+      func(...args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+};
+
+/**
+ * Deep clone an object
+ */
+export const deepClone = <T>(obj: T): T => {
+  if (obj === null || typeof obj !== 'object') return obj;
+  if (obj instanceof Date) return new Date(obj.getTime()) as unknown as T;
+  if (obj instanceof Array) return obj.map(item => deepClone(item)) as unknown as T;
+  if (typeof obj === 'object') {
+    const clonedObj = {} as T;
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        clonedObj[key] = deepClone(obj[key]);
+      }
+    }
+    return clonedObj;
+  }
+  return obj;
+};
+
+/**
+ * Check if two objects are deeply equal
+ */
+export const deepEqual = (a: any, b: any): boolean => {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (typeof a !== typeof b) return false;
+  
+  if (typeof a === 'object') {
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+    
+    if (keysA.length !== keysB.length) return false;
+    
+    for (const key of keysA) {
+      if (!keysB.includes(key)) return false;
+      if (!deepEqual(a[key], b[key])) return false;
+    }
+    
+    return true;
+  }
+  
+  return false;
+};
+
+/**
+ * Generate a random ID
+ */
+export const generateId = (length: number = 8): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
+
+/**
+ * Sleep function for async operations
+ */
+export const sleep = (ms: number): Promise<void> => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+/**
+ * Capitalize the first letter of a string
+ */
+export const capitalize = (str: string): string => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+/**
+ * Convert camelCase to kebab-case
+ */
+export const camelToKebab = (str: string): string => {
+  return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
+};
+
+/**
+ * Convert kebab-case to camelCase
+ */
+export const kebabToCamel = (str: string): string => {
+  return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+};
+
+/**
+ * Get a nested object property safely
+ */
+export const getNestedProperty = (obj: any, path: string, defaultValue: any = undefined): any => {
+  const keys = path.split('.');
+  let result = obj;
+  
+  for (const key of keys) {
+    if (result == null || typeof result !== 'object') {
+      return defaultValue;
+    }
+    result = result[key];
+  }
+  
+  return result !== undefined ? result : defaultValue;
+};
+
+/**
+ * Set a nested object property
+ */
+export const setNestedProperty = (obj: any, path: string, value: any): void => {
+  const keys = path.split('.');
+  const lastKey = keys.pop();
+  
+  if (!lastKey) return;
+  
+  let current = obj;
+  for (const key of keys) {
+    if (!(key in current) || typeof current[key] !== 'object') {
+      current[key] = {};
+    }
+    current = current[key];
+  }
+  
+  current[lastKey] = value;
+};
+
+/**
+ * Remove undefined properties from an object
+ */
+export const removeUndefined = <T extends Record<string, any>>(obj: T): Partial<T> => {
+  const result: Partial<T> = {};
+  
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      result[key as keyof T] = value;
+    }
+  }
+  
+  return result;
+};
+
+/**
+ * Check if a value is empty (null, undefined, empty string, empty array, empty object)
+ */
+export const isEmpty = (value: any): boolean => {
+  if (value == null) return true;
+  if (typeof value === 'string') return value.trim() === '';
+  if (Array.isArray(value)) return value.length === 0;
+  if (typeof value === 'object') return Object.keys(value).length === 0;
+  return false;
+};
+
+/**
+ * Clamp a number between min and max values
+ */
+export const clamp = (value: number, min: number, max: number): number => {
+  return Math.min(Math.max(value, min), max);
+};
+
+/**
+ * Round a number to specified decimal places
+ */
+export const roundTo = (value: number, decimals: number): number => {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+};
+
+/**
+ * Calculate percentage change between two values
+ */
+export const percentageChange = (oldValue: number, newValue: number): number => {
+  if (oldValue === 0) return newValue === 0 ? 0 : 100;
+  return ((newValue - oldValue) / Math.abs(oldValue)) * 100;
+};
+
+/**
+ * Convert bytes to human readable format
+ */
+export const bytesToSize = (bytes: number): string => {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes === 0) return '0 Bytes';
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+};
+
+/**
+ * Check if the current environment is development
+ */
+export const isDevelopment = (): boolean => {
+  return import.meta.env.DEV;
+};
+
+/**
+ * Check if the current environment is production
+ */
+export const isProduction = (): boolean => {
+  return import.meta.env.PROD;
+};
+
+/**
+ * Get the current environment
+ */
+export const getEnvironment = (): string => {
+  return import.meta.env.MODE || 'development';
+};

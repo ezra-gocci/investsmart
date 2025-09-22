@@ -1,0 +1,196 @@
+import React from 'react';
+import { useLanguage } from '../../translations/LanguageContext';
+import Card from '../UI/Card';
+
+interface YearlyData {
+  year: number;
+  initialAmount: number;
+  revenue: number;
+  investmentAdds: number;
+  endingAmount: number;
+}
+
+interface InvestmentResult {
+  totalContributions: number;
+  interestEarned: number;
+  finalAmount: number;
+  effectiveAnnualReturn: number;
+  yearlyBreakdown: YearlyData[];
+}
+
+interface ResultsDisplayProps {
+  result: InvestmentResult;
+  formatCurrency: (amount: number) => string;
+  isLoggedIn: boolean;
+}
+
+const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
+  result,
+  formatCurrency,
+  isLoggedIn,
+}) => {
+  const { t } = useLanguage();
+
+  if (!isLoggedIn) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-8">
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Card className="text-center">
+          <div className="text-2xl font-bold text-green-600">
+            {formatCurrency(result.finalAmount)}
+          </div>
+          <div className="text-sm text-gray-600 mt-1">
+            {t('calculator.results.finalAmount')}
+          </div>
+        </Card>
+        
+        <Card className="text-center">
+          <div className="text-2xl font-bold text-blue-600">
+            {formatCurrency(result.totalContributions)}
+          </div>
+          <div className="text-sm text-gray-600 mt-1">
+            {t('calculator.results.totalContributions')}
+          </div>
+        </Card>
+        
+        <Card className="text-center">
+          <div className="text-2xl font-bold text-purple-600">
+            {formatCurrency(result.interestEarned)}
+          </div>
+          <div className="text-sm text-gray-600 mt-1">
+            {t('calculator.results.interestEarned')}
+          </div>
+        </Card>
+        
+        <Card className="text-center">
+          <div className="text-2xl font-bold text-orange-600">
+            {result.effectiveAnnualReturn.toFixed(2)}%
+          </div>
+          <div className="text-sm text-gray-600 mt-1">
+            {t('calculator.results.effectiveReturn')}
+          </div>
+        </Card>
+      </div>
+
+      {/* Visualizations */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {/* Growth Chart */}
+        <Card title={t('calculator.visualizations.growth')}>
+          <div className="h-64 flex items-center justify-center bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div className="text-gray-500 dark:text-gray-400">
+              {t('calculator.visualizations.chartPlaceholder')}
+            </div>
+          </div>
+          <div className="mt-4 flex justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-blue-500"></div>
+              <span className="text-gray-700 dark:text-gray-300">
+                {t('calculator.visualizations.contributions')}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-green-500"></div>
+              <span className="text-gray-700 dark:text-gray-300">
+                {t('calculator.visualizations.growth')}
+              </span>
+            </div>
+          </div>
+        </Card>
+
+        {/* Breakdown Chart */}
+        <Card title={t('calculator.visualizations.breakdown')}>
+          <div className="h-64 flex items-center justify-center bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div className="text-gray-500 dark:text-gray-400">
+              {t('calculator.visualizations.pieChartPlaceholder')}
+            </div>
+          </div>
+          <div className="mt-4 flex justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
+              <span className="text-gray-700 dark:text-gray-300">
+                {t('calculator.visualizations.initialInvestment')} (70%)
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-pink-500"></div>
+              <span className="text-gray-700 dark:text-gray-300">
+                {t('calculator.visualizations.monthlyAdditions')} (20%)
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-green-500"></div>
+              <span className="text-gray-700 dark:text-gray-300">
+                {t('calculator.visualizations.revenue')} (10%)
+              </span>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Annual Breakdown Table */}
+      <Card>
+        <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+          {t('calculator.table.title')}
+        </h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-700">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  {t('calculator.table.year')}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  {t('calculator.table.initialAmount')}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  {t('calculator.table.revenue')}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  {t('calculator.table.investmentAdds')}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  {t('calculator.table.endingAmount')}
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+              {result.yearlyBreakdown.slice(0, 10).map((yearData) => (
+                <tr key={yearData.year} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                    {yearData.year}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                    {formatCurrency(yearData.initialAmount)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                    {formatCurrency(yearData.revenue)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                    {formatCurrency(yearData.investmentAdds)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                    {formatCurrency(yearData.endingAmount)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        
+        {result.yearlyBreakdown.length > 10 && (
+          <div className="mt-4 text-center">
+            <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+              {t('calculator.table.showMore')} ({result.yearlyBreakdown.length - 10} {t('calculator.table.moreYears')})
+            </button>
+          </div>
+        )}
+      </Card>
+    </div>
+  );
+};
+
+export default ResultsDisplay;

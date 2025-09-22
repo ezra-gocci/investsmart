@@ -1,0 +1,230 @@
+// Investment-related type definitions
+
+export interface InvestmentInputs {
+  initialCapital: number;
+  annualRate: number;
+  termYears: number;
+  monthlyAddition: number;
+  compoundingFrequency: CompoundingFrequency;
+  targetAmount: number;
+}
+
+export interface InvestmentResult {
+  totalContributions: number;
+  interestEarned: number;
+  finalAmount: number;
+  effectiveAnnualReturn: number;
+  yearlyBreakdown: YearlyData[];
+  monthlyBreakdown?: MonthlyData[];
+}
+
+export interface YearlyData {
+  year: number;
+  initialAmount: number;
+  revenue: number;
+  investmentAdds: number;
+  endingAmount: number;
+  cumulativeContributions: number;
+  cumulativeInterest: number;
+}
+
+export interface MonthlyData {
+  month: number;
+  year: number;
+  startingBalance: number;
+  contribution: number;
+  interestEarned: number;
+  endingBalance: number;
+}
+
+export interface LockedFields {
+  initialCapital: boolean;
+  annualRate: boolean;
+  termYears: boolean;
+  monthlyAddition: boolean;
+  compoundingFrequency: boolean;
+  targetAmount: boolean;
+}
+
+export type CompoundingFrequency = 
+  | 'Daily'
+  | 'Weekly'
+  | 'Monthly'
+  | 'Quarterly'
+  | 'Semi-annually'
+  | 'Annually';
+
+export interface InvestmentGoal {
+  id: string;
+  name: string;
+  targetAmount: number;
+  targetDate: string;
+  currentAmount: number;
+  monthlyContribution: number;
+  expectedReturn: number;
+  priority: 'low' | 'medium' | 'high';
+  category: GoalCategory;
+  status: 'active' | 'paused' | 'completed' | 'cancelled';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type GoalCategory = 
+  | 'retirement'
+  | 'emergency_fund'
+  | 'house_down_payment'
+  | 'education'
+  | 'vacation'
+  | 'car'
+  | 'wedding'
+  | 'other';
+
+export interface Portfolio {
+  id: string;
+  name: string;
+  totalValue: number;
+  allocations: AssetAllocation[];
+  performance: PortfolioPerformance;
+  riskLevel: RiskLevel;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AssetAllocation {
+  assetClass: AssetClass;
+  percentage: number;
+  currentValue: number;
+  targetPercentage: number;
+}
+
+export type AssetClass = 
+  | 'stocks'
+  | 'bonds'
+  | 'real_estate'
+  | 'commodities'
+  | 'cash'
+  | 'crypto'
+  | 'alternatives';
+
+export type RiskLevel = 'conservative' | 'moderate' | 'aggressive';
+
+export interface PortfolioPerformance {
+  totalReturn: number;
+  annualizedReturn: number;
+  volatility: number;
+  sharpeRatio: number;
+  maxDrawdown: number;
+  ytdReturn: number;
+  oneYearReturn: number;
+  threeYearReturn: number;
+  fiveYearReturn: number;
+}
+
+export interface Investment {
+  id: string;
+  symbol: string;
+  name: string;
+  type: InvestmentType;
+  quantity: number;
+  averageCost: number;
+  currentPrice: number;
+  totalValue: number;
+  unrealizedGainLoss: number;
+  unrealizedGainLossPercentage: number;
+  dividendYield?: number;
+  expenseRatio?: number;
+  sector?: string;
+  country?: string;
+}
+
+export type InvestmentType = 
+  | 'stock'
+  | 'etf'
+  | 'mutual_fund'
+  | 'bond'
+  | 'reit'
+  | 'commodity'
+  | 'crypto'
+  | 'option'
+  | 'future';
+
+export interface MarketData {
+  symbol: string;
+  price: number;
+  change: number;
+  changePercent: number;
+  volume: number;
+  marketCap?: number;
+  peRatio?: number;
+  dividendYield?: number;
+  fiftyTwoWeekHigh: number;
+  fiftyTwoWeekLow: number;
+  lastUpdated: string;
+}
+
+export interface HistoricalPrice {
+  date: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  adjustedClose?: number;
+}
+
+export interface DividendData {
+  exDate: string;
+  paymentDate: string;
+  amount: number;
+  frequency: 'monthly' | 'quarterly' | 'semi-annually' | 'annually';
+}
+
+export interface EconomicIndicator {
+  name: string;
+  value: number;
+  previousValue: number;
+  change: number;
+  changePercent: number;
+  lastUpdated: string;
+  frequency: string;
+  unit: string;
+}
+
+export interface RetirementCalculation {
+  currentAge: number;
+  retirementAge: number;
+  currentSavings: number;
+  monthlyContribution: number;
+  employerMatch: number;
+  expectedReturn: number;
+  inflationRate: number;
+  desiredRetirementIncome: number;
+  socialSecurityBenefit: number;
+  projectedSavings: number;
+  monthlyIncomeNeeded: number;
+  savingsShortfall: number;
+  recommendedMonthlyContribution: number;
+}
+
+export interface TaxCalculation {
+  income: number;
+  filingStatus: 'single' | 'married_joint' | 'married_separate' | 'head_of_household';
+  deductions: number;
+  exemptions: number;
+  federalTax: number;
+  stateTax: number;
+  socialSecurityTax: number;
+  medicareTax: number;
+  totalTax: number;
+  effectiveRate: number;
+  marginalRate: number;
+  afterTaxIncome: number;
+}
+
+export interface InflationAdjustment {
+  nominalAmount: number;
+  realAmount: number;
+  inflationRate: number;
+  years: number;
+  cumulativeInflation: number;
+}

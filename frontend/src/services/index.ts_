@@ -1,0 +1,18 @@
+// Services for handling API calls, calculations, and storage
+
+export { default as apiService } from './api';
+export type { ApiConfig } from './api';
+
+export { default as calculationService } from './calculations';
+export type { 
+  CompoundInterestParams, 
+  InvestmentBreakdown, 
+  RetirementProjection 
+} from './calculations';
+
+export { default as storageService } from './storage';
+export type { 
+  StorageItem, 
+  UserPreferences, 
+  SavedCalculation 
+} from './storage';

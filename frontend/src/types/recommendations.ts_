@@ -1,0 +1,279 @@
+// Recommendation-related type definitions
+
+export interface RecommendationData {
+  id: string;
+  userId: string;
+  type: RecommendationType;
+  title: string;
+  description: string;
+  priority: RecommendationPriority;
+  category: RecommendationCategory;
+  status: RecommendationStatus;
+  confidence: number; // 0-100
+  potentialImpact: PotentialImpact;
+  actionItems: ActionItem[];
+  reasoning: string[];
+  dataPoints: DataPoint[];
+  createdAt: string;
+  updatedAt: string;
+  expiresAt?: string;
+}
+
+export type RecommendationType = 
+  | 'asset_allocation'
+  | 'rebalancing'
+  | 'tax_optimization'
+  | 'risk_adjustment'
+  | 'goal_adjustment'
+  | 'contribution_increase'
+  | 'diversification'
+  | 'cost_reduction'
+  | 'market_timing'
+  | 'emergency_fund';
+
+export type RecommendationPriority = 'low' | 'medium' | 'high' | 'critical';
+
+export type RecommendationCategory = 
+  | 'portfolio'
+  | 'savings'
+  | 'risk_management'
+  | 'tax_strategy'
+  | 'retirement'
+  | 'education'
+  | 'insurance'
+  | 'debt_management';
+
+export type RecommendationStatus = 
+  | 'pending'
+  | 'viewed'
+  | 'accepted'
+  | 'rejected'
+  | 'implemented'
+  | 'expired';
+
+export interface PotentialImpact {
+  financialGain: number;
+  riskReduction: number;
+  timeToGoal: number; // in months
+  taxSavings: number;
+  description: string;
+}
+
+export interface ActionItem {
+  id: string;
+  title: string;
+  description: string;
+  type: ActionType;
+  priority: 'low' | 'medium' | 'high';
+  estimatedTime: number; // in minutes
+  difficulty: 'easy' | 'medium' | 'hard';
+  completed: boolean;
+  completedAt?: string;
+  url?: string;
+  parameters?: Record<string, any>;
+}
+
+export type ActionType = 
+  | 'rebalance_portfolio'
+  | 'increase_contribution'
+  | 'change_allocation'
+  | 'open_account'
+  | 'review_fees'
+  | 'tax_loss_harvest'
+  | 'emergency_fund_setup'
+  | 'insurance_review'
+  | 'debt_payoff'
+  | 'goal_update';
+
+export interface DataPoint {
+  label: string;
+  value: number | string;
+  unit?: string;
+  trend?: 'up' | 'down' | 'stable';
+  benchmark?: number;
+  source: string;
+}
+
+export interface AssetAllocationRecommendation {
+  currentAllocation: AllocationBreakdown;
+  recommendedAllocation: AllocationBreakdown;
+  rebalancingNeeded: boolean;
+  rebalancingAmount: number;
+  reasoning: string[];
+  riskLevel: 'conservative' | 'moderate' | 'aggressive';
+  timeHorizon: number; // in years
+}
+
+export interface AllocationBreakdown {
+  stocks: AllocationDetail;
+  bonds: AllocationDetail;
+  realEstate: AllocationDetail;
+  commodities: AllocationDetail;
+  cash: AllocationDetail;
+  alternatives?: AllocationDetail;
+}
+
+export interface AllocationDetail {
+  percentage: number;
+  currentValue: number;
+  targetValue: number;
+  difference: number;
+  subCategories?: Record<string, AllocationDetail>;
+}
+
+export interface RiskAssessment {
+  overallRiskScore: number; // 1-10
+  riskTolerance: 'low' | 'medium' | 'high';
+  riskCapacity: 'low' | 'medium' | 'high';
+  timeHorizon: number;
+  volatilityComfort: number;
+  factors: RiskFactor[];
+  recommendations: string[];
+}
+
+export interface RiskFactor {
+  name: string;
+  impact: 'positive' | 'negative' | 'neutral';
+  weight: number;
+  description: string;
+}
+
+export interface TaxOptimizationRecommendation {
+  currentTaxDrag: number;
+  potentialSavings: number;
+  strategies: TaxStrategy[];
+  accountOptimization: AccountOptimization[];
+  harvestingOpportunities: TaxLossHarvesting[];
+}
+
+export interface TaxStrategy {
+  name: string;
+  description: string;
+  potentialSavings: number;
+  complexity: 'low' | 'medium' | 'high';
+  requirements: string[];
+  timeline: string;
+}
+
+export interface AccountOptimization {
+  accountType: string;
+  currentUsage: number;
+  recommendedUsage: number;
+  benefit: string;
+  action: string;
+}
+
+export interface TaxLossHarvesting {
+  security: string;
+  unrealizedLoss: number;
+  taxBenefit: number;
+  replacementSuggestion?: string;
+  washSaleRisk: boolean;
+}
+
+export interface GoalRecommendation {
+  goalId: string;
+  goalName: string;
+  currentProgress: number; // percentage
+  projectedCompletion: string;
+  onTrack: boolean;
+  adjustments: GoalAdjustment[];
+  milestones: Milestone[];
+}
+
+export interface GoalAdjustment {
+  type: 'contribution' | 'timeline' | 'target' | 'allocation';
+  current: number;
+  recommended: number;
+  impact: string;
+  reasoning: string;
+}
+
+export interface Milestone {
+  date: string;
+  targetAmount: number;
+  probability: number;
+  description: string;
+}
+
+export interface MarketInsight {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  type: 'market_update' | 'economic_indicator' | 'sector_analysis' | 'trend_alert';
+  relevance: number; // 0-100
+  impact: 'positive' | 'negative' | 'neutral';
+  timeframe: 'short' | 'medium' | 'long';
+  sources: string[];
+  createdAt: string;
+  tags: string[];
+}
+
+export interface PersonalizedInsight {
+  id: string;
+  userId: string;
+  title: string;
+  message: string;
+  type: 'performance' | 'behavior' | 'opportunity' | 'warning';
+  relevantGoals: string[];
+  relevantAccounts: string[];
+  actionable: boolean;
+  dismissed: boolean;
+  createdAt: string;
+}
+
+export interface BehavioralInsight {
+  pattern: string;
+  frequency: number;
+  impact: 'positive' | 'negative';
+  suggestion: string;
+  confidence: number;
+  examples: string[];
+}
+
+export interface RecommendationEngine {
+  version: string;
+  lastUpdated: string;
+  algorithms: AlgorithmInfo[];
+  dataFreshness: DataFreshness;
+}
+
+export interface AlgorithmInfo {
+  name: string;
+  version: string;
+  accuracy: number;
+  lastTrained: string;
+  parameters: Record<string, any>;
+}
+
+export interface DataFreshness {
+  marketData: string;
+  userPortfolio: string;
+  economicIndicators: string;
+  userBehavior: string;
+}
+
+export interface RecommendationFeedback {
+  recommendationId: string;
+  userId: string;
+  rating: number; // 1-5
+  helpful: boolean;
+  implemented: boolean;
+  comments?: string;
+  outcome?: 'positive' | 'negative' | 'neutral';
+  submittedAt: string;
+}
+
+export interface RecommendationMetrics {
+  totalRecommendations: number;
+  acceptanceRate: number;
+  implementationRate: number;
+  averageRating: number;
+  impactMetrics: {
+    totalSavings: number;
+    riskReduction: number;
+    goalAcceleration: number;
+  };
+  categoryBreakdown: Record<RecommendationCategory, number>;
+}

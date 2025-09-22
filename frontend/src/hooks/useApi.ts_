@@ -1,0 +1,164 @@
+import { useState, useCallback } from 'react';
+
+export interface ApiResponse<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  name: string;
+  preferences: {
+    currency: string;
+    language: string;
+    riskTolerance: 'low' | 'medium' | 'high';
+  };
+}
+
+export interface SavedCalculation {
+  id: string;
+  name: string;
+  inputs: any;
+  result: any;
+  createdAt: string;
+  updatedAt: string;
+}
+
+const useApi = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const makeRequest = useCallback(async <T>(
+    url: string,
+    options: RequestInit = {}
+  ): Promise<ApiResponse<T>> => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+        ...options,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setLoading(false);
+      
+      return {
+        data,
+        loading: false,
+        error: null
+      };
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+      setError(errorMessage);
+      setLoading(false);
+      
+      return {
+        data: null,
+        loading: false,
+        error: errorMessage
+      };
+    }
+  }, []);
+
+  // User authentication methods
+  const login = useCallback(async (email: string, password: string) => {
+    return makeRequest<{ token: string; user: UserProfile }>('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+  }, [makeRequest]);
+
+  const register = useCallback(async (email: string, password: string, name: string) => {
+    return makeRequest<{ token: string; user: UserProfile }>('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, name }),
+    });
+  }, [makeRequest]);
+
+  const logout = useCallback(async () => {
+    return makeRequest<{ success: boolean }>('/api/auth/logout', {
+      method: 'POST',
+    });
+  }, [makeRequest]);
+
+  // User profile methods
+  const getUserProfile = useCallback(async () => {
+    return makeRequest<UserProfile>('/api/user/profile');
+  }, [makeRequest]);
+
+  const updateUserProfile = useCallback(async (updates: Partial<UserProfile>) => {
+    return makeRequest<UserProfile>('/api/user/profile', {
+      method: 'PUT',
+      body: JSON.stringify(updates),
+    });
+  }, [makeRequest]);
+
+  // Saved calculations methods
+  const getSavedCalculations = useCallback(async () => {
+    return makeRequest<SavedCalculation[]>('/api/calculations');
+  }, [makeRequest]);
+
+  const saveCalculation = useCallback(async (calculation: Omit<SavedCalculation, 'id' | 'createdAt' | 'updatedAt'>) => {
+    return makeRequest<SavedCalculation>('/api/calculations', {
+      method: 'POST',
+      body: JSON.stringify(calculation),
+    });
+  }, [makeRequest]);
+
+  const updateCalculation = useCallback(async (id: string, updates: Partial<SavedCalculation>) => {
+    return makeRequest<SavedCalculation>(`/api/calculations/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updates),
+    });
+  }, [makeRequest]);
+
+  const deleteCalculation = useCallback(async (id: string) => {
+    return makeRequest<{ success: boolean }>(`/api/calculations/${id}`, {
+      method: 'DELETE',
+    });
+  }, [makeRequest]);
+
+  // Market data methods
+  const getMarketData = useCallback(async (symbol: string) => {
+    return makeRequest<any>(`/api/market/${symbol}`);
+  }, [makeRequest]);
+
+  const getHistoricalReturns = useCallback(async (assetClass: string, period: string) => {
+    return makeRequest<any>(`/api/market/historical/${assetClass}?period=${period}`);
+  }, [makeRequest]);
+
+  return {
+    loading,
+    error,
+    // Auth methods
+    login,
+    register,
+    logout,
+    // User methods
+    getUserProfile,
+    updateUserProfile,
+    // Calculation methods
+    getSavedCalculations,
+    saveCalculation,
+    updateCalculation,
+    deleteCalculation,
+    // Market data methods
+    getMarketData,
+    getHistoricalReturns,
+    // Generic request method
+    makeRequest
+  };
+};
+
+export default useApi;

@@ -1,0 +1,195 @@
+// Type definitions for the investment calculator application
+
+// Investment types
+export type {
+  InvestmentInputs,
+  InvestmentResult,
+  YearlyData,
+  MonthlyData,
+  LockedFields,
+  CompoundingFrequency,
+  InvestmentGoal,
+  GoalCategory,
+  Portfolio,
+  AssetAllocation,
+  AssetClass,
+  RiskLevel,
+  PortfolioPerformance,
+  Investment,
+  InvestmentType,
+  MarketData,
+  HistoricalPrice,
+  DividendData,
+  EconomicIndicator,
+  RetirementCalculation,
+  TaxCalculation,
+  InflationAdjustment
+} from './investment';
+
+// API types
+export type {
+  ApiResponse,
+  ApiError,
+  ResponseMeta,
+  PaginationParams,
+  RequestConfig,
+  LoginRequest,
+  RegisterRequest,
+  AuthResponse,
+  RefreshTokenRequest,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+  ChangePasswordRequest,
+  User,
+  UserRole,
+  UserPreferences,
+  NotificationPreferences,
+  PrivacySettings,
+  UpdateUserRequest,
+  Subscription,
+  SubscriptionPlan,
+  SubscriptionStatus,
+  SaveCalculationRequest,
+  UpdateCalculationRequest,
+  CalculationResponse,
+  MarketDataRequest,
+  MarketDataResponse,
+  HistoricalDataRequest,
+  HistoricalDataResponse,
+  HistoricalDataPoint,
+  FileUploadRequest,
+  FileUploadResponse,
+  ExportRequest,
+  ImportRequest,
+  ImportResponse,
+  ImportError,
+  WebhookEvent,
+  RateLimitInfo,
+  HealthCheckResponse,
+  ServiceStatus
+} from './api';
+
+// Recommendation types
+export type {
+  RecommendationData,
+  RecommendationType,
+  RecommendationPriority,
+  RecommendationCategory,
+  RecommendationStatus,
+  PotentialImpact,
+  ActionItem,
+  ActionType,
+  DataPoint,
+  AssetAllocationRecommendation,
+  AllocationBreakdown,
+  AllocationDetail,
+  RiskAssessment,
+  RiskFactor,
+  TaxOptimizationRecommendation,
+  TaxStrategy,
+  AccountOptimization,
+  TaxLossHarvesting,
+  GoalRecommendation,
+  GoalAdjustment,
+  Milestone,
+  MarketInsight,
+  PersonalizedInsight,
+  BehavioralInsight,
+  RecommendationEngine,
+  AlgorithmInfo,
+  DataFreshness,
+  RecommendationFeedback,
+  RecommendationMetrics
+} from './recommendations';
+
+// Common utility types
+export type Nullable<T> = T | null;
+export type Optional<T> = T | undefined;
+export type Partial<T> = { [P in keyof T]?: T[P] };
+export type Required<T> = { [P in keyof T]-?: T[P] };
+export type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+// Generic response wrapper
+export interface BaseResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+  timestamp: string;
+}
+
+// Error types
+export interface AppError {
+  code: string;
+  message: string;
+  details?: Record<string, any>;
+  timestamp: string;
+}
+
+// Loading states
+export interface LoadingState {
+  loading: boolean;
+  error: string | null;
+  lastUpdated?: string;
+}
+
+// Form validation
+export interface ValidationError {
+  field: string;
+  message: string;
+  code?: string;
+}
+
+export interface FormState<T> {
+  values: T;
+  errors: ValidationError[];
+  touched: Record<keyof T, boolean>;
+  isValid: boolean;
+  isSubmitting: boolean;
+}
+
+// Theme and UI types
+export type Theme = 'light' | 'dark' | 'system';
+export type Language = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'cs' | 'hy';
+export type Currency = 'USD' | 'EUR' | 'GBP' | 'JPY' | 'CAD' | 'AUD' | 'CHF';
+
+// Chart and visualization types
+export interface ChartDataPoint {
+  x: number | string | Date;
+  y: number;
+  label?: string;
+}
+
+export interface ChartSeries {
+  name: string;
+  data: ChartDataPoint[];
+  color?: string;
+  type?: 'line' | 'bar' | 'area' | 'scatter';
+}
+
+export interface ChartConfig {
+  title?: string;
+  xAxis?: AxisConfig;
+  yAxis?: AxisConfig;
+  legend?: LegendConfig;
+  tooltip?: TooltipConfig;
+}
+
+export interface AxisConfig {
+  title?: string;
+  min?: number;
+  max?: number;
+  format?: string;
+  type?: 'linear' | 'logarithmic' | 'datetime' | 'category';
+}
+
+export interface LegendConfig {
+  show: boolean;
+  position: 'top' | 'bottom' | 'left' | 'right';
+}
+
+export interface TooltipConfig {
+  show: boolean;
+  format?: string;
+  shared?: boolean;
+}

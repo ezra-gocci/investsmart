@@ -1,0 +1,160 @@
+import { useState, useCallback } from 'react';
+
+export interface InvestmentInputs {
+  initialCapital: number;
+  annualRate: number;
+  termYears: number;
+  monthlyAddition: number;
+  compoundingFrequency: string;
+  targetAmount: number;
+}
+
+export interface InvestmentResult {
+  totalContributions: number;
+  interestEarned: number;
+  finalAmount: number;
+  effectiveAnnualReturn: number;
+  yearlyBreakdown: YearlyData[];
+}
+
+export interface YearlyData {
+  year: number;
+  initialAmount: number;
+  revenue: number;
+  investmentAdds: number;
+  endingAmount: number;
+}
+
+export interface LockedFields {
+  initialCapital: boolean;
+  annualRate: boolean;
+  termYears: boolean;
+  monthlyAddition: boolean;
+  compoundingFrequency: boolean;
+  targetAmount: boolean;
+}
+
+const useInvestmentCalculator = () => {
+  const [inputs, setInputs] = useState<InvestmentInputs>({
+    initialCapital: 10000,
+    annualRate: 5,
+    termYears: 10,
+    monthlyAddition: 500,
+    compoundingFrequency: 'Annually',
+    targetAmount: 50000
+  });
+
+  const [lockedFields, setLockedFields] = useState<LockedFields>({
+    initialCapital: false,
+    annualRate: false,
+    termYears: false,
+    monthlyAddition: false,
+    compoundingFrequency: false,
+    targetAmount: false
+  });
+
+  const [result, setResult] = useState<InvestmentResult>({
+    totalContributions: 0,
+    interestEarned: 0,
+    finalAmount: 0,
+    effectiveAnnualReturn: 0,
+    yearlyBreakdown: []
+  });
+
+  const handleInputChange = useCallback((field: keyof InvestmentInputs, value: number | string) => {
+    setInputs(prev => ({ ...prev, [field]: value }));
+  }, []);
+
+  const toggleLock = useCallback((field: keyof LockedFields) => {
+    setLockedFields(prev => ({ ...prev, [field]: !prev[field] }));
+  }, []);
+
+  const calculateInvestment = useCallback(() => {
+    const { initialCapital, annualRate, termYears, monthlyAddition, compoundingFrequency } = inputs;
+    
+    const rate = annualRate / 100;
+    let compoundingPerYear = 1;
+    
+    switch (compoundingFrequency) {
+      case 'Monthly':
+        compoundingPerYear = 12;
+        break;
+      case 'Quarterly':
+        compoundingPerYear = 4;
+        break;
+      case 'Semi-annually':
+        compoundingPerYear = 2;
+        break;
+      case 'Annually':
+      default:
+        compoundingPerYear = 1;
+        break;
+    }
+    
+    const periodicRate = rate / compoundingPerYear;
+    const totalPeriods = termYears * compoundingPerYear;
+    const monthlyPeriodicRate = rate / 12;
+    const totalMonths = termYears * 12;
+    
+    // Calculate compound interest for initial capital
+    const futureValueInitial = initialCapital * Math.pow(1 + periodicRate, totalPeriods);
+    
+    // Calculate future value of monthly additions (annuity)
+    let futureValueAnnuity = 0;
+    if (monthlyAddition > 0 && monthlyPeriodicRate > 0) {
+      futureValueAnnuity = monthlyAddition * 
+        ((Math.pow(1 + monthlyPeriodicRate, totalMonths) - 1) / monthlyPeriodicRate);
+    } else if (monthlyAddition > 0) {
+      futureValueAnnuity = monthlyAddition * totalMonths;
+    }
+    
+    const finalAmount = futureValueInitial + futureValueAnnuity;
+    const totalContributions = initialCapital + (monthlyAddition * totalMonths);
+    const interestEarned = finalAmount - totalContributions;
+    const effectiveAnnualReturn = totalContributions > 0 ? 
+      ((finalAmount / totalContributions) ** (1 / termYears) - 1) * 100 : 0;
+    
+    // Generate yearly breakdown
+    const yearlyBreakdown: YearlyData[] = [];
+    let currentAmount = initialCapital;
+    
+    for (let year = 1; year <= termYears; year++) {
+      const initialAmount = currentAmount;
+      const yearlyAdditions = monthlyAddition * 12;
+      const revenue = (currentAmount + yearlyAdditions / 2) * rate;
+      const endingAmount = currentAmount + yearlyAdditions + revenue;
+      
+      yearlyBreakdown.push({
+        year,
+        initialAmount,
+        revenue,
+        investmentAdds: yearlyAdditions,
+        endingAmount
+      });
+      
+      currentAmount = endingAmount;
+    }
+    
+    const newResult: InvestmentResult = {
+      totalContributions,
+      interestEarned,
+      finalAmount,
+      effectiveAnnualReturn,
+      yearlyBreakdown
+    };
+    
+    setResult(newResult);
+    return newResult;
+  }, [inputs]);
+
+  return {
+    inputs,
+    lockedFields,
+    result,
+    handleInputChange,
+    toggleLock,
+    calculateInvestment
+  };
+};
+
+export default useInvestmentCalculator;

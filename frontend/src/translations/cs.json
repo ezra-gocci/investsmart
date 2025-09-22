@@ -1,0 +1,214 @@
+{
+  "nav": {
+    "calculate": "Vypočítat",
+    "recommend": "Doporučit",
+    "explain": "Vysvětlit",
+    "text": "Text",
+    "manage": "Spravovat",
+    "login": "Přihlásit se",
+    "logout": "Odhlásit se",
+    "loginPrompt": "Přihlaste se a vyzkoušejte to"
+  },
+  "logo": {
+    "title": "InvestSmart"
+  },
+  "calculator": {
+    "title": "Investiční Kalkulačka",
+    "subtitle": "Vypočítejte své investiční výnosy se složeným úrokem",
+    "initialAmount": "Počáteční Investiční Částka",
+    "initialCapital": "Počáteční Kapitál ($)",
+    "monthlyContribution": "Měsíční Příspěvek",
+    "monthlyAdd": "Měsíční Přídavek ($)",
+    "annualReturn": "Očekávaný Roční Výnos (%)",
+    "annualRate": "Roční Sazba (%)",
+    "years": "Investiční Období (Roky)",
+    "termYears": "Doba (Roky)",
+    "targetAmount": "Cílová Částka ($)",
+    "compoundingFrequency": "Frekvence Složení",
+    "compounding": "Složení (Doba)",
+    "calculate": "Vypočítat Investici",
+    "amountInvested": "Investovaná Částka",
+    "calculationParameters": "Parametry Výpočtu",
+    "results": {
+      "title": "Výsledky Investice",
+      "totalValue": "Celková Hodnota Investice",
+      "totalContributions": "Celkové Příspěvky",
+      "totalGains": "Celkové Zisky z Investice",
+      "monthlyGrowth": "Průměrný Měsíční Růst",
+      "exportReport": "Exportovat Zprávu",
+      "interestEarned": "Získaný Úrok",
+      "effectiveAnnualReturn": "Efektivní Roční Výnos"
+    },
+    "visualizations": {
+      "title": "Vizualizace Investice",
+      "growthChart": "Graf Růstu Investice",
+      "compositionChart": "Složení Portfolia",
+      "breakdown": "Graf Rozložení"
+    },
+    "table": {
+      "title": "Tabulka Investice",
+      "year": "Rok",
+      "startingAmount": "Počáteční Částka",
+      "initialAmount": "Počáteční Částka",
+      "contributions": "Příspěvky",
+      "interest": "Získaný Úrok",
+      "endingAmount": "Konečná Částka",
+      "revenue": "Výnosy",
+      "investmentAdds": "Investiční Přídavky"
+    }
+  },
+  "recommendations": {
+    "title": "Investiční Doporučení",
+    "subtitle": "Personalizované investiční strategie založené na vašem rizikovém profilu",
+    "riskAssessment": {
+      "label": "Hodnocení Rizika",
+      "title": "Vyhodnoťte Svou Toleranci k Riziku",
+      "description": "Pochopte svůj investorský profil pro informovaná rozhodnutí"
+    },
+    "allocation": {
+      "title": "Doporučená Alokace Aktiv",
+      "indexFunds": {
+        "title": "Indexové Fondy",
+        "percentage": "60-70%",
+        "examples": "S&P 500, Total Stock Market"
+      },
+      "bonds": {
+        "title": "Dluhopisy",
+        "percentage": "20-30%",
+        "examples": "Státní Dluhopisy, Korporátní Dluhopisy"
+      },
+      "reits": {
+        "title": "REITs",
+        "percentage": "5-10%",
+        "examples": "Nemovitostní Fondy, Diverzifikované REITs"
+      },
+      "savings": {
+         "title": "Nouzová Rezerva",
+         "percentage": "3-6 měsíců",
+         "examples": "Vysokoúročený spořicí účet",
+         "description": "Pro likviditu a bezpečnost"
+       }
+    },
+    "strategicAdvice": {
+       "label": "Strategické Rady",
+       "title": "Diverzifikace a Rebalancování",
+       "description": "Diverzifikujte mezi různé třídy aktiv pro snížení rizika. Doporučujeme kontrolovat vaše portfolio ročně nebo pololetně a rebalancovat ho zpět k vaší cílové alokaci."
+     },
+    "historicalExamples": {
+       "label": "Historické Příklady",
+       "title": "Analýza Minulé Výkonnosti",
+       "description": "Historicky portfolio s touto alokací vykazovalo odolnost během poklesů trhu a zároveň zachycovalo růst v býčích trzích. Průměrný roční výnos byl v rozmezí 6-8%."
+     },
+    "conservative": {
+      "title": "Konzervativní",
+      "description": "Nízké riziko, stabilní výnosy",
+      "allocation": "70% Dluhopisy, 30% Akcie",
+      "expectedReturn": "4-6% ročně"
+    },
+    "moderate": {
+      "title": "Mírné",
+      "description": "Vyvážené riziko, stabilní růst",
+      "allocation": "50% Akcie, 40% Dluhopisy, 10% REITs",
+      "expectedReturn": "6-8% ročně"
+    },
+    "aggressive": {
+      "title": "Agresivní",
+      "description": "Vysoké riziko, vysoký růstový potenciál",
+      "allocation": "80% Akcie, 15% REITs, 5% Dluhopisy",
+      "expectedReturn": "8-12% ročně"
+    }
+  },
+  "explanations": {
+    "title": "Jak to Funguje - Vzorce a Vysvětlení",
+    "subtitle": "Pochopení matematiky za složeným úrokem a jak každé vstupní pole ovlivňuje růst vaší investice.",
+    "formula": {
+      "label": "Základní Vzorec",
+      "title": "Složený Úrok s Pravidelnými Přídavky"
+    },
+    "inputFields": {
+      "label": "Vstupní Pole",
+      "title": "Pochopení Parametrů Vaší Investice",
+      "initialCapital": {
+        "title": "Počáteční Kapitál",
+        "description": "Počáteční částka, kterou investujete. Ta roste prostřednictvím složeného úroku v čase."
+      },
+      "monthlyAddition": {
+        "title": "Měsíční Přídavek",
+        "description": "Pravidelné měsíční příspěvky, které urychlují růst prostřednictvím průměrování nákladů."
+      },
+      "annualRate": {
+        "title": "Roční Sazba",
+        "description": "Očekávané roční procento výnosu. Historický průměr akciového trhu je ~7-10%."
+      },
+      "termYears": {
+        "title": "Doba (Roky)",
+        "description": "Doba trvání investice. Delší období exponenciálně zesilují efekty složeného úroku."
+      },
+      "compoundingFrequency": {
+        "title": "Frekvence Úročení",
+        "description": "Jak často se úrok počítá a přidává. Častější = mírně vyšší výnosy."
+      },
+      "targetAmount": {
+        "title": "Cílová Částka",
+        "description": "Váš finanční cíl. Kalkulačka může vyřešit jakoukoli chybějící proměnnou."
+      }
+    },
+    "resultsBreakdown": {
+      "label": "Rozpis Výsledků",
+      "title": "Pochopení Růstu Vaší Investice",
+      "totalInvested": {
+        "title": "Celkem Investováno",
+        "description": "Počáteční kapitál + všechny měsíční přídavky. To je vaše skutečná investice z vlastní kapsy."
+      },
+      "interestEarned": {
+        "title": "Získaný Úrok",
+        "description": "Peníze generované čistě ze složeného růstu. To jsou 'zadarmo peníze' vaší investice."
+      },
+      "finalValue": {
+        "title": "Konečná Hodnota",
+        "description": "Celková hodnota portfolia: investovaná částka + složený úrok získaný v čase."
+      }
+    },
+    "keyInsights": {
+      "label": "Klíčové Poznatky",
+      "title": "Síla Složeného Úroku",
+      "time": {
+        "title": "Čas je Vaše Největší Aktivum",
+        "description": "Začít brzy, i s menšími částkami, často překoná větší investice provedené později kvůli exponenciálnímu růstu."
+      },
+      "consistency": {
+        "title": "Konzistence Záleží",
+        "description": "Pravidelné měsíční přídavky využívají průměrování nákladů a výrazně zvyšují dlouhodobé výnosy."
+      },
+      "rateImpact": {
+        "title": "Dopad Sazby",
+        "description": "Malé rozdíly v ročních sazbách výnosu (např. 6% vs 8%) vytvářejí masivní rozdíly během desetiletí."
+      },
+      "compoundingFrequency": {
+        "title": "Frekvence Úročení",
+        "description": "Zatímco denní úročení překonává roční, rozdíl je menší, než většina lidí očekává."
+      }
+    },
+    "compoundInterest": {
+      "title": "Vzorec Složeného Úroku",
+      "description": "Základem růstu investice je složený úrok, kde vaše výnosy generují své vlastní výnosy v čase."
+    },
+    "monthlyContributions": {
+      "title": "Dopad Měsíčních Příspěvků",
+      "description": "Pravidelné měsíční příspěvky výrazně zvyšují růst vaší investice prostřednictvím průměrování nákladů a konzistentního úročení."
+    },
+    "timeValue": {
+      "title": "Časová Hodnota Peněz",
+      "description": "Čím dříve začnete investovat, tím více času budou mít vaše peníze na růst. I malé částky se mohou stát podstatnými během dlouhých období."
+    }
+  },
+  "language": {
+    "selector": "Jazyk",
+    "english": "English",
+    "spanish": "Español",
+    "french": "Français",
+    "portuguese": "Português",
+    "czech": "Čeština",
+    "armenian": "Հայերեն"
+  }
+}

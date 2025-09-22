@@ -1,0 +1,120 @@
+import { useState, useEffect, useCallback } from 'react';
+import { InvestmentInputs, InvestmentResult } from './useInvestmentCalculator';
+
+export interface RecommendationData {
+  riskLevel: 'conservative' | 'moderate' | 'aggressive';
+  allocation: {
+    stocks: number;
+    bonds: number;
+    reits: number;
+    cash: number;
+  };
+  suggestions: string[];
+  warnings: string[];
+}
+
+const useRecommendations = (inputs: InvestmentInputs, result: InvestmentResult) => {
+  const [recommendations, setRecommendations] = useState<RecommendationData>({
+    riskLevel: 'moderate',
+    allocation: {
+      stocks: 60,
+      bonds: 30,
+      reits: 5,
+      cash: 5
+    },
+    suggestions: [],
+    warnings: []
+  });
+
+  const generateRecommendations = useCallback(() => {
+    const { annualRate, termYears, monthlyAddition, initialCapital } = inputs;
+    const { effectiveAnnualReturn } = result;
+    
+    let riskLevel: 'conservative' | 'moderate' | 'aggressive' = 'moderate';
+    let allocation = { stocks: 60, bonds: 30, reits: 5, cash: 5 };
+    const suggestions: string[] = [];
+    const warnings: string[] = [];
+    
+    // Determine risk level based on investment parameters
+    if (annualRate <= 3 || termYears <= 5) {
+      riskLevel = 'conservative';
+      allocation = { stocks: 30, bonds: 60, reits: 5, cash: 5 };
+    } else if (annualRate >= 8 || termYears >= 20) {
+      riskLevel = 'aggressive';
+      allocation = { stocks: 80, bonds: 10, reits: 5, cash: 5 };
+    }
+    
+    // Generate suggestions based on inputs
+    if (monthlyAddition < 100) {
+      suggestions.push('Consider increasing monthly contributions for better compound growth');
+    }
+    
+    if (termYears < 5) {
+      suggestions.push('Short investment periods limit compound interest benefits');
+      warnings.push('Consider extending investment timeline for better returns');
+    }
+    
+    if (annualRate > 10) {
+      warnings.push('Expected returns above 10% annually may be unrealistic for most investments');
+    }
+    
+    if (initialCapital < monthlyAddition * 12) {
+      suggestions.push('Your monthly contributions exceed your initial capital - great for building wealth!');
+    }
+    
+    if (effectiveAnnualReturn > 0) {
+      if (effectiveAnnualReturn < 3) {
+        suggestions.push('Consider higher-yield investments to beat inflation');
+      } else if (effectiveAnnualReturn > 12) {
+        warnings.push('High returns often come with increased risk');
+      }
+    }
+    
+    // Age-based recommendations (assuming user is working age)
+    if (termYears > 30) {
+      suggestions.push('Long-term investing allows for more aggressive growth strategies');
+    }
+    
+    setRecommendations({
+      riskLevel,
+      allocation,
+      suggestions,
+      warnings
+    });
+  }, [inputs, result]);
+
+  useEffect(() => {
+    generateRecommendations();
+  }, [generateRecommendations]);
+
+  const updateRiskLevel = useCallback((newRiskLevel: 'conservative' | 'moderate' | 'aggressive') => {
+    let newAllocation;
+    
+    switch (newRiskLevel) {
+      case 'conservative':
+        newAllocation = { stocks: 30, bonds: 60, reits: 5, cash: 5 };
+        break;
+      case 'aggressive':
+        newAllocation = { stocks: 80, bonds: 10, reits: 5, cash: 5 };
+        break;
+      case 'moderate':
+      default:
+        newAllocation = { stocks: 60, bonds: 30, reits: 5, cash: 5 };
+        break;
+    }
+    
+    setRecommendations(prev => ({
+      ...prev,
+      riskLevel: newRiskLevel,
+      allocation: newAllocation
+    }));
+  }, []);
+
+  return {
+    recommendations,
+    generateRecommendations,
+    updateRiskLevel
+  };
+};
+
+export default useRecommendations;

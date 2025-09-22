@@ -1,0 +1,312 @@
+// Local storage service for persisting user data and application state
+
+export interface StorageItem<T> {
+  value: T;
+  timestamp: number;
+  expiresAt?: number;
+}
+
+export interface UserPreferences {
+  theme: 'light' | 'dark' | 'system';
+  language: string;
+  currency: string;
+  defaultCalculationParams: any;
+  notifications: {
+    email: boolean;
+    push: boolean;
+    reminders: boolean;
+  };
+}
+
+export interface SavedCalculation {
+  id: string;
+  name: string;
+  inputs: any;
+  result: any;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+class StorageService {
+  private readonly prefix = 'calcinvest_';
+
+  /**
+   * Store data in localStorage with optional expiration
+   */
+  setItem<T>(key: string, value: T, expirationHours?: number): void {
+    try {
+      const item: StorageItem<T> = {
+        value,
+        timestamp: Date.now(),
+        expiresAt: expirationHours ? Date.now() + (expirationHours * 60 * 60 * 1000) : undefined
+      };
+      
+      localStorage.setItem(this.prefix + key, JSON.stringify(item));
+    } catch (error) {
+      console.error('Error storing item in localStorage:', error);
+    }
+  }
+
+  /**
+   * Retrieve data from localStorage with expiration check
+   */
+  getItem<T>(key: string): T | null {
+    try {
+      const stored = localStorage.getItem(this.prefix + key);
+      if (!stored) return null;
+
+      const item: StorageItem<T> = JSON.parse(stored);
+      
+      // Check if item has expired
+      if (item.expiresAt && Date.now() > item.expiresAt) {
+        this.removeItem(key);
+        return null;
+      }
+
+      return item.value;
+    } catch (error) {
+      console.error('Error retrieving item from localStorage:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Remove item from localStorage
+   */
+  removeItem(key: string): void {
+    try {
+      localStorage.removeItem(this.prefix + key);
+    } catch (error) {
+      console.error('Error removing item from localStorage:', error);
+    }
+  }
+
+  /**
+   * Clear all application data from localStorage
+   */
+  clear(): void {
+    try {
+      const keys = Object.keys(localStorage);
+      keys.forEach(key => {
+        if (key.startsWith(this.prefix)) {
+          localStorage.removeItem(key);
+        }
+      });
+    } catch (error) {
+      console.error('Error clearing localStorage:', error);
+    }
+  }
+
+  /**
+   * Get storage usage information
+   */
+  getStorageInfo(): { used: number; available: number; percentage: number } {
+    try {
+      let used = 0;
+      const keys = Object.keys(localStorage);
+      
+      keys.forEach(key => {
+        if (key.startsWith(this.prefix)) {
+          used += localStorage.getItem(key)?.length || 0;
+        }
+      });
+
+      // Estimate available storage (5MB is typical localStorage limit)
+      const available = 5 * 1024 * 1024; // 5MB in bytes
+      const percentage = (used / available) * 100;
+
+      return { used, available, percentage };
+    } catch (error) {
+      console.error('Error getting storage info:', error);
+      return { used: 0, available: 0, percentage: 0 };
+    }
+  }
+
+  // User preferences methods
+  getUserPreferences(): UserPreferences | null {
+    return this.getItem<UserPreferences>('user_preferences');
+  }
+
+  setUserPreferences(preferences: UserPreferences): void {
+    this.setItem('user_preferences', preferences);
+  }
+
+  updateUserPreferences(updates: Partial<UserPreferences>): void {
+    const current = this.getUserPreferences() || this.getDefaultPreferences();
+    const updated = { ...current, ...updates };
+    this.setUserPreferences(updated);
+  }
+
+  private getDefaultPreferences(): UserPreferences {
+    return {
+      theme: 'system',
+      language: 'en',
+      currency: 'USD',
+      defaultCalculationParams: {
+        initialCapital: 10000,
+        monthlyAddition: 500,
+        annualRate: 7,
+        termYears: 10,
+        compoundingFrequency: 'Monthly'
+      },
+      notifications: {
+        email: true,
+        push: false,
+        reminders: true
+      }
+    };
+  }
+
+  // Saved calculations methods
+  getSavedCalculations(): SavedCalculation[] {
+    return this.getItem<SavedCalculation[]>('saved_calculations') || [];
+  }
+
+  saveCalculation(calculation: Omit<SavedCalculation, 'id' | 'createdAt' | 'updatedAt'>): SavedCalculation {
+    const calculations = this.getSavedCalculations();
+    const now = new Date().toISOString();
+    
+    const newCalculation: SavedCalculation = {
+      ...calculation,
+      id: this.generateId(),
+      createdAt: now,
+      updatedAt: now
+    };
+    
+    calculations.push(newCalculation);
+    this.setItem('saved_calculations', calculations);
+    
+    return newCalculation;
+  }
+
+  updateCalculation(id: string, updates: Partial<SavedCalculation>): SavedCalculation | null {
+    const calculations = this.getSavedCalculations();
+    const index = calculations.findIndex(calc => calc.id === id);
+    
+    if (index === -1) return null;
+    
+    const updated = {
+      ...calculations[index],
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+    
+    calculations[index] = updated;
+    this.setItem('saved_calculations', calculations);
+    
+    return updated;
+  }
+
+  deleteCalculation(id: string): boolean {
+    const calculations = this.getSavedCalculations();
+    const filtered = calculations.filter(calc => calc.id !== id);
+    
+    if (filtered.length === calculations.length) {
+      return false; // No calculation found with that ID
+    }
+    
+    this.setItem('saved_calculations', filtered);
+    return true;
+  }
+
+  // Session data methods
+  setSessionData(key: string, value: any): void {
+    try {
+      sessionStorage.setItem(this.prefix + key, JSON.stringify(value));
+    } catch (error) {
+      console.error('Error storing session data:', error);
+    }
+  }
+
+  getSessionData<T>(key: string): T | null {
+    try {
+      const stored = sessionStorage.getItem(this.prefix + key);
+      return stored ? JSON.parse(stored) : null;
+    } catch (error) {
+      console.error('Error retrieving session data:', error);
+      return null;
+    }
+  }
+
+  removeSessionData(key: string): void {
+    try {
+      sessionStorage.removeItem(this.prefix + key);
+    } catch (error) {
+      console.error('Error removing session data:', error);
+    }
+  }
+
+  // Authentication token methods
+  setAuthToken(token: string, expirationHours: number = 24): void {
+    this.setItem('auth_token', token, expirationHours);
+  }
+
+  getAuthToken(): string | null {
+    return this.getItem<string>('auth_token');
+  }
+
+  removeAuthToken(): void {
+    this.removeItem('auth_token');
+  }
+
+  // Recent calculations cache
+  addToRecentCalculations(calculation: any): void {
+    const recent = this.getItem<any[]>('recent_calculations') || [];
+    const updated = [calculation, ...recent.slice(0, 9)]; // Keep last 10
+    this.setItem('recent_calculations', updated, 24); // Expire after 24 hours
+  }
+
+  getRecentCalculations(): any[] {
+    return this.getItem<any[]>('recent_calculations') || [];
+  }
+
+  // Utility methods
+  private generateId(): string {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  }
+
+  /**
+   * Export all user data for backup
+   */
+  exportUserData(): string {
+    const data = {
+      preferences: this.getUserPreferences(),
+      savedCalculations: this.getSavedCalculations(),
+      recentCalculations: this.getRecentCalculations(),
+      exportedAt: new Date().toISOString()
+    };
+    
+    return JSON.stringify(data, null, 2);
+  }
+
+  /**
+   * Import user data from backup
+   */
+  importUserData(jsonData: string): boolean {
+    try {
+      const data = JSON.parse(jsonData);
+      
+      if (data.preferences) {
+        this.setUserPreferences(data.preferences);
+      }
+      
+      if (data.savedCalculations) {
+        this.setItem('saved_calculations', data.savedCalculations);
+      }
+      
+      if (data.recentCalculations) {
+        this.setItem('recent_calculations', data.recentCalculations, 24);
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Error importing user data:', error);
+      return false;
+    }
+  }
+}
+
+// Create and export a singleton instance
+export const storageService = new StorageService();
+export default storageService;

@@ -1,0 +1,276 @@
+// Investment calculation service with various financial formulas
+
+export interface CompoundInterestParams {
+  principal: number;
+  rate: number;
+  time: number;
+  compoundingFrequency: number;
+  monthlyContribution?: number;
+}
+
+export interface InvestmentBreakdown {
+  year: number;
+  startingBalance: number;
+  contributions: number;
+  interestEarned: number;
+  endingBalance: number;
+  cumulativeContributions: number;
+  cumulativeInterest: number;
+}
+
+export interface RetirementProjection {
+  targetAmount: number;
+  monthsToTarget: number;
+  requiredMonthlyContribution: number;
+  shortfall: number;
+}
+
+class CalculationService {
+  /**
+   * Calculate compound interest with optional monthly contributions
+   */
+  calculateCompoundInterest(params: CompoundInterestParams) {
+    const { principal, rate, time, compoundingFrequency, monthlyContribution = 0 } = params;
+    
+    const periodicRate = rate / compoundingFrequency;
+    const totalPeriods = time * compoundingFrequency;
+    
+    // Future value of principal
+    const futureValuePrincipal = principal * Math.pow(1 + periodicRate, totalPeriods);
+    
+    // Future value of monthly contributions (annuity)
+    let futureValueContributions = 0;
+    if (monthlyContribution > 0) {
+      const monthlyRate = rate / 12;
+      const totalMonths = time * 12;
+      
+      if (monthlyRate > 0) {
+        futureValueContributions = monthlyContribution * 
+          ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate);
+      } else {
+        futureValueContributions = monthlyContribution * totalMonths;
+      }
+    }
+    
+    const totalValue = futureValuePrincipal + futureValueContributions;
+    const totalContributions = principal + (monthlyContribution * time * 12);
+    const totalInterest = totalValue - totalContributions;
+    
+    return {
+      futureValue: totalValue,
+      totalContributions,
+      totalInterest,
+      effectiveRate: totalContributions > 0 ? 
+        Math.pow(totalValue / totalContributions, 1 / time) - 1 : 0
+    };
+  }
+
+  /**
+   * Generate year-by-year breakdown of investment growth
+   */
+  generateInvestmentBreakdown(params: CompoundInterestParams): InvestmentBreakdown[] {
+    const { principal, rate, time, monthlyContribution = 0 } = params;
+    const breakdown: InvestmentBreakdown[] = [];
+    
+    let currentBalance = principal;
+    let cumulativeContributions = principal;
+    let cumulativeInterest = 0;
+    
+    for (let year = 1; year <= time; year++) {
+      const startingBalance = currentBalance;
+      const yearlyContributions = monthlyContribution * 12;
+      
+      // Calculate interest on average balance throughout the year
+      const averageBalance = startingBalance + (yearlyContributions / 2);
+      const interestEarned = averageBalance * rate;
+      
+      const endingBalance = startingBalance + yearlyContributions + interestEarned;
+      
+      cumulativeContributions += yearlyContributions;
+      cumulativeInterest += interestEarned;
+      
+      breakdown.push({
+        year,
+        startingBalance,
+        contributions: yearlyContributions,
+        interestEarned,
+        endingBalance,
+        cumulativeContributions,
+        cumulativeInterest
+      });
+      
+      currentBalance = endingBalance;
+    }
+    
+    return breakdown;
+  }
+
+  /**
+   * Calculate required monthly contribution to reach a target amount
+   */
+  calculateRequiredContribution(
+    targetAmount: number,
+    currentAmount: number,
+    rate: number,
+    years: number
+  ): number {
+    const monthlyRate = rate / 12;
+    const totalMonths = years * 12;
+    
+    // Future value of current amount
+    const futureValueCurrent = currentAmount * Math.pow(1 + monthlyRate, totalMonths);
+    
+    // Remaining amount needed from contributions
+    const remainingAmount = targetAmount - futureValueCurrent;
+    
+    if (remainingAmount <= 0) {
+      return 0; // Already have enough
+    }
+    
+    if (monthlyRate === 0) {
+      return remainingAmount / totalMonths;
+    }
+    
+    // Calculate required monthly payment for annuity
+    return remainingAmount * monthlyRate / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+  }
+
+  /**
+   * Calculate retirement projection based on current savings and goals
+   */
+  calculateRetirementProjection(
+    currentAge: number,
+    retirementAge: number,
+    currentSavings: number,
+    monthlyContribution: number,
+    expectedReturn: number,
+    targetAmount: number
+  ): RetirementProjection {
+    const yearsToRetirement = retirementAge - currentAge;
+    const monthsToRetirement = yearsToRetirement * 12;
+    
+    const projectedAmount = this.calculateCompoundInterest({
+      principal: currentSavings,
+      rate: expectedReturn,
+      time: yearsToRetirement,
+      compoundingFrequency: 12,
+      monthlyContribution
+    });
+    
+    const shortfall = Math.max(0, targetAmount - projectedAmount.futureValue);
+    
+    const requiredMonthlyContribution = this.calculateRequiredContribution(
+      targetAmount,
+      currentSavings,
+      expectedReturn,
+      yearsToRetirement
+    );
+    
+    return {
+      targetAmount,
+      monthsToTarget: monthsToRetirement,
+      requiredMonthlyContribution,
+      shortfall
+    };
+  }
+
+  /**
+   * Calculate the real return adjusted for inflation
+   */
+  calculateRealReturn(nominalReturn: number, inflationRate: number): number {
+    return (1 + nominalReturn) / (1 + inflationRate) - 1;
+  }
+
+  /**
+   * Calculate the present value of future cash flows
+   */
+  calculatePresentValue(futureValue: number, rate: number, periods: number): number {
+    return futureValue / Math.pow(1 + rate, periods);
+  }
+
+  /**
+   * Calculate the internal rate of return for a series of cash flows
+   */
+  calculateIRR(cashFlows: number[], guess: number = 0.1): number {
+    const maxIterations = 100;
+    const tolerance = 1e-6;
+    
+    let rate = guess;
+    
+    for (let i = 0; i < maxIterations; i++) {
+      let npv = 0;
+      let dnpv = 0;
+      
+      for (let j = 0; j < cashFlows.length; j++) {
+        npv += cashFlows[j] / Math.pow(1 + rate, j);
+        dnpv -= j * cashFlows[j] / Math.pow(1 + rate, j + 1);
+      }
+      
+      const newRate = rate - npv / dnpv;
+      
+      if (Math.abs(newRate - rate) < tolerance) {
+        return newRate;
+      }
+      
+      rate = newRate;
+    }
+    
+    return rate; // Return best approximation if not converged
+  }
+
+  /**
+   * Calculate portfolio allocation based on risk tolerance and time horizon
+   */
+  calculateOptimalAllocation(
+    age: number,
+    riskTolerance: 'conservative' | 'moderate' | 'aggressive',
+    timeHorizon: number
+  ) {
+    let stockPercentage = 100 - age; // Rule of thumb: 100 minus age
+    
+    // Adjust based on risk tolerance
+    switch (riskTolerance) {
+      case 'conservative':
+        stockPercentage = Math.max(20, stockPercentage - 20);
+        break;
+      case 'aggressive':
+        stockPercentage = Math.min(90, stockPercentage + 20);
+        break;
+      case 'moderate':
+      default:
+        // Keep the base calculation
+        break;
+    }
+    
+    // Adjust based on time horizon
+    if (timeHorizon < 5) {
+      stockPercentage = Math.max(20, stockPercentage - 15);
+    } else if (timeHorizon > 20) {
+      stockPercentage = Math.min(90, stockPercentage + 10);
+    }
+    
+    const bondPercentage = 100 - stockPercentage;
+    
+    return {
+      stocks: stockPercentage,
+      bonds: bondPercentage,
+      recommendation: this.getAllocationRecommendation(stockPercentage)
+    };
+  }
+
+  private getAllocationRecommendation(stockPercentage: number): string {
+    if (stockPercentage >= 80) {
+      return 'Aggressive growth portfolio suitable for long-term investors with high risk tolerance';
+    } else if (stockPercentage >= 60) {
+      return 'Balanced portfolio with good growth potential and moderate risk';
+    } else if (stockPercentage >= 40) {
+      return 'Conservative growth portfolio with emphasis on capital preservation';
+    } else {
+      return 'Very conservative portfolio focused on income and capital preservation';
+    }
+  }
+}
+
+// Create and export a singleton instance
+export const calculationService = new CalculationService();
+export default calculationService;

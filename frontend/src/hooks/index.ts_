@@ -1,0 +1,19 @@
+// Custom hooks for the investment calculator application
+
+export { default as useInvestmentCalculator } from './useInvestmentCalculator';
+export type { 
+  InvestmentInputs, 
+  InvestmentResult, 
+  YearlyData, 
+  LockedFields 
+} from './useInvestmentCalculator';
+
+export { default as useRecommendations } from './useRecommendations';
+export type { RecommendationData } from './useRecommendations';
+
+export { default as useApi } from './useApi';
+export type { 
+  ApiResponse, 
+  UserProfile, 
+  SavedCalculation 
+} from './useApi';

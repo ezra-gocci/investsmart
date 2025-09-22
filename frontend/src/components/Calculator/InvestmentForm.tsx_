@@ -1,0 +1,260 @@
+import React from 'react';
+import { useLanguage } from '../../translations/LanguageContext';
+import Button from '../UI/Button';
+import Input from '../UI/Input';
+import Card from '../UI/Card';
+
+interface InvestmentInputs {
+  initialCapital: number;
+  annualRate: number;
+  termYears: number;
+  monthlyAddition: number;
+  compoundingFrequency: string;
+  targetAmount: number;
+}
+
+interface LockedFields {
+  initialCapital: boolean;
+  annualRate: boolean;
+  termYears: boolean;
+  monthlyAddition: boolean;
+  compoundingFrequency: boolean;
+  targetAmount: boolean;
+}
+
+interface InvestmentFormProps {
+  inputs: InvestmentInputs;
+  lockedFields: LockedFields;
+  onInputChange: (field: keyof InvestmentInputs, value: string) => void;
+  onLockToggle: (field: keyof LockedFields) => void;
+  onCalculate: () => void;
+  isLoggedIn: boolean;
+}
+
+const InvestmentForm: React.FC<InvestmentFormProps> = ({
+  inputs,
+  lockedFields,
+  onInputChange,
+  onLockToggle,
+  onCalculate,
+  isLoggedIn,
+}) => {
+  const { t } = useLanguage();
+
+  if (!isLoggedIn) {
+    return (
+      <Card className="text-center py-12">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          {t('auth.loginRequired')}
+        </h3>
+        <p className="text-gray-600 mb-4">
+          {t('auth.loginToAccess')}
+        </p>
+      </Card>
+    );
+  }
+
+  return (
+    <Card 
+      id="calculate" 
+      className="mb-12" 
+      title={t('calculator.form.title')}
+      style={{scrollMarginTop: '100px'}}
+    >
+      <form className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          {/* Amount Invested Section */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 opacity-90 xl:col-span-2">
+            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 text-center">
+              {t('calculator.amountInvested')}
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="group flex flex-col gap-2">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t('calculator.initialCapital')}
+                </span>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    value={inputs.initialCapital}
+                    onChange={(e) => onInputChange('initialCapital', e.target.value)}
+                    disabled={lockedFields.initialCapital}
+                    placeholder="$10,000"
+                    className="pl-2"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onLockToggle('initialCapital')}
+                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded ${
+                      lockedFields.initialCapital ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    {lockedFields.initialCapital ? '🔒' : '🔓'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="group flex flex-col gap-2">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t('calculator.monthlyAddition')}
+                </span>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    value={inputs.monthlyAddition}
+                    onChange={(e) => onInputChange('monthlyAddition', e.target.value)}
+                    disabled={lockedFields.monthlyAddition}
+                    placeholder="$500"
+                    className="pl-2"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onLockToggle('monthlyAddition')}
+                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded ${
+                      lockedFields.monthlyAddition ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    {lockedFields.monthlyAddition ? '🔒' : '🔓'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Investment Details Section */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 opacity-90 xl:col-span-2">
+            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 text-center">
+              {t('calculator.investmentDetails')}
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="group flex flex-col gap-2">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t('calculator.annualRate')}
+                </span>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    value={inputs.annualRate}
+                    onChange={(e) => onInputChange('annualRate', e.target.value)}
+                    disabled={lockedFields.annualRate}
+                    placeholder="5%"
+                    className="pl-2"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onLockToggle('annualRate')}
+                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded ${
+                      lockedFields.annualRate ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    {lockedFields.annualRate ? '🔒' : '🔓'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="group flex flex-col gap-2">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t('calculator.termYears')}
+                </span>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    value={inputs.termYears}
+                    onChange={(e) => onInputChange('termYears', e.target.value)}
+                    disabled={lockedFields.termYears}
+                    placeholder="10"
+                    className="pl-2"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onLockToggle('termYears')}
+                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded ${
+                      lockedFields.termYears ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    {lockedFields.termYears ? '🔒' : '🔓'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Target & Frequency Section */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 opacity-90 xl:col-span-2">
+            <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 text-center">
+              {t('calculator.targetAndFrequency')}
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="group flex flex-col gap-2">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t('calculator.targetAmount')}
+                </span>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    value={inputs.targetAmount}
+                    onChange={(e) => onInputChange('targetAmount', e.target.value)}
+                    disabled={lockedFields.targetAmount}
+                    placeholder="$50,000"
+                    className="pl-2"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onLockToggle('targetAmount')}
+                    className={`absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded ${
+                      lockedFields.targetAmount ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    {lockedFields.targetAmount ? '🔒' : '🔓'}
+                  </button>
+                </div>
+              </div>
+              
+              <div className="group flex flex-col gap-2">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t('calculator.compoundingFrequency')}
+                </span>
+                <div className="relative">
+                  <select
+                    value={inputs.compoundingFrequency}
+                    onChange={(e) => onInputChange('compoundingFrequency', e.target.value)}
+                    disabled={lockedFields.compoundingFrequency}
+                    className="form-select w-full rounded-lg border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-green-500 focus:ring-green-500 pl-2"
+                  >
+                    <option value="Annually">{t('calculator.frequency.annually')}</option>
+                    <option value="Semi-annually">{t('calculator.frequency.semiAnnually')}</option>
+                    <option value="Quarterly">{t('calculator.frequency.quarterly')}</option>
+                    <option value="Monthly">{t('calculator.frequency.monthly')}</option>
+                    <option value="Daily">{t('calculator.frequency.daily')}</option>
+                  </select>
+                  <button
+                    type="button"
+                    onClick={() => onLockToggle('compoundingFrequency')}
+                    className={`absolute right-8 top-1/2 transform -translate-y-1/2 p-1 rounded ${
+                      lockedFields.compoundingFrequency ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                  >
+                    {lockedFields.compoundingFrequency ? '🔒' : '🔓'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex justify-center mt-6">
+          <Button
+            onClick={onCalculate}
+            variant="primary"
+            size="lg"
+            className="px-8"
+          >
+            {t('calculator.calculate')}
+          </Button>
+        </div>
+      </form>
+    </Card>
+  );
+};
+
+export default InvestmentForm;
