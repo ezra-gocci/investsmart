@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LanguageProvider } from './translations/LanguageContext.tsx';
-import Header from './components/Layout/Header.tsx';
+import TopBar from './components/Layout/TopBar.tsx';
 import MainContent from './components/Layout/MainContent.tsx';
 import TextContent from './components/Layout/TextContent.tsx';
 import ManageContent from './components/Layout/ManageContent.tsx';
@@ -41,7 +41,7 @@ function App() {
   return (
     <LanguageProvider>
       <div className="flex min-h-screen w-full flex-col bg-gray-50 dark:bg-gray-900">
-        <Header 
+        <TopBar 
           isLoggedIn={isLoggedIn}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
